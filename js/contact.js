@@ -109,7 +109,7 @@
         name: form.name.value.trim(),
         email: form.email.value.trim(),
         service: form.service.value,
-        budget: form.budget.value,
+        budget: form.budget ? form.budget.value : "",
         subject: form.subject.value.trim(),
         message: form.message.value.trim(),
         website: form.website.value // honeypot (server drops if filled)
