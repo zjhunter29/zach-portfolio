@@ -124,6 +124,7 @@ main { padding-top: var(--nav-h); }
 
 /* ---------- Gradient text ---------- */
 .gradient-text {
+  font-family: "Playfair Display", Georgia, serif; font-style: italic;
   background: linear-gradient(120deg, #6cb8ff, #2f80ff);
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -455,7 +456,7 @@ body:hover .cursor-glow { opacity: 1; }
 .about__grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(2rem, 6vw, 4.5rem); align-items: center; }
 .about__portrait { position: relative; }
 .about__portrait-frame { border-radius: var(--r-xl); overflow: hidden; padding: 8px; }
-.about__portrait-frame img { width: 100%; border-radius: calc(var(--r-xl) - 8px); }
+.about__portrait-frame img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; display: block; border-radius: calc(var(--r-xl) - 8px); }
 .about__portrait-badge { position: absolute; bottom: 1.4rem; right: -.6rem; display: inline-flex; align-items: center; gap: .5rem; padding: .7rem 1.05rem; border-radius: var(--r-pill); font-size: .85rem; font-weight: 600; }
 .about__portrait-badge .ico { color: var(--blue); }
 .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
@@ -465,6 +466,7 @@ body:hover .cursor-glow { opacity: 1; }
 .about__tools { display: flex; flex-wrap: wrap; gap: .7rem; margin-bottom: 2rem; }
 .soft-card { display: inline-flex; align-items: center; gap: .55rem; padding: .6rem 1rem; border-radius: var(--r-pill); font-size: .9rem; font-weight: 500; }
 .soft-card .ico { color: var(--blue); }
+.soft-card__logo { width: 24px; height: 24px; border-radius: 6px; flex: none; }
 
 /* =========================================================
    Reviews
