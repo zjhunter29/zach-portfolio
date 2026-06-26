@@ -1,0 +1,5 @@
+# robots.txt — replace the host below with your real domain
+User-agent: *
+Allow: /
+
+Sitemap: https://example.com/sitemap.xml

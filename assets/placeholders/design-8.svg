@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img">
+  
+  <defs>
+    <linearGradient id="bg-p7" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0c18"/>
+      <stop offset="1" stop-color="#04040a"/>
+    </linearGradient>
+    <radialGradient id="ga-p7" cx="0.2" cy="0.15" r="0.9">
+      <stop offset="0" stop-color="#7c3aed" stop-opacity="0.85"/>
+      <stop offset="1" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gb-p7" cx="0.85" cy="0.9" r="0.9">
+      <stop offset="0" stop-color="#2563eb" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#2563eb" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="txt-p7" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <filter id="blur-p7"><feGaussianBlur stdDeviation="42"/></filter>
+    <filter id="grain-p7">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.045"/></feComponentTransfer>
+      <feComposite operator="over" in2="SourceGraphic"/>
+    </filter>
+  </defs>
+  
+  <rect width="800" height="1000" fill="url(#bg-p7)"/>
+  <rect width="800" height="1000" fill="url(#ga-p7)" filter="url(#blur-p7)"/>
+  <rect width="800" height="1000" fill="url(#gb-p7)" filter="url(#blur-p7)"/>
+  <rect x="22" y="22" width="756" height="956" rx="26" fill="none" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text x="48" y="78" font-family="Sora, 'Segoe UI', system-ui, sans-serif" font-size="15" letter-spacing="4" font-weight="600" fill="#7c3aed">THUMBNAILS</text>
+  <text x="752" y="78" font-family="Sora, 'Segoe UI', system-ui, sans-serif" font-size="15" letter-spacing="2" font-weight="600" fill="#8a8d9f" text-anchor="end">ZACH ©</text>
+  <text x="400" y="380" font-family="Sora, 'Segoe UI', system-ui, sans-serif" font-size="84" font-weight="800" fill="#f4f5fa" text-anchor="middle">STREAM</text><text x="400" y="476" font-family="Sora, 'Segoe UI', system-ui, sans-serif" font-size="84" font-weight="800" fill="url(#txt-p7)" text-anchor="middle">COVER</text>
+  <text x="48" y="944" font-family="Sora, 'Segoe UI', system-ui, sans-serif" font-size="22" font-weight="600" fill="#c7c9d6">Stream Cover</text>
+  <rect width="800" height="1000" filter="url(#grain-p7)" opacity="0.5"/></svg>

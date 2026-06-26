@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <script>document.documentElement.classList.add('js');</script>
+
+  <title>Zach — Video Editor &amp; Graphic Designer | Bringing Ideas to Life</title>
+  <meta name="description" content="Zach is an independent video editor, graphic designer and UX designer with 4+ years of experience. Cinematic edits, premium branding and polished visuals — built to convert." />
+  <meta name="author" content="Zach" />
+  <meta name="theme-color" content="#070811" />
+  <meta name="color-scheme" content="dark" />
+  <link rel="canonical" href="https://example.com/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Zach — Video Editor &amp; Graphic Designer" />
+  <meta property="og:description" content="Cinematic video editing, premium branding and polished design. Bringing ideas to life." />
+  <meta property="og:url" content="https://example.com/" />
+  <meta property="og:image" content="https://example.com/assets/placeholders/og-image.svg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name" content="Zach" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Zach — Video Editor &amp; Graphic Designer" />
+  <meta name="twitter:description" content="Cinematic video editing, premium branding and polished design. Bringing ideas to life." />
+  <meta name="twitter:image" content="https://example.com/assets/placeholders/og-image.svg" />
+
+  <!-- Favicons -->
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/icons/favicon.svg" />
+  <link rel="mask-icon" href="assets/icons/favicon.svg" color="#5b8cff" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "name": "Zach",
+        "jobTitle": "Video Editor & Graphic Designer",
+        "url": "https://example.com/",
+        "image": "https://example.com/assets/placeholders/portrait.svg",
+        "sameAs": [
+          "https://instagram.com/",
+          "https://youtube.com/",
+          "https://behance.net/"
+        ],
+        "knowsAbout": ["Video Editing", "Graphic Design", "UX Design", "Motion Graphics", "Branding"]
+      },
+      {
+        "@type": "ProfessionalService",
+        "name": "Zach — Creative Studio",
+        "url": "https://example.com/",
+        "image": "https://example.com/assets/placeholders/og-image.svg",
+        "priceRange": "$$",
+        "description": "Independent video editing, graphic design and UX design services.",
+        "makesOffer": [
+          { "@type": "Offer", "name": "Short-Form Video Editing (0–1 min)", "price": "149.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Long-Form Video Editing (1–5 min)", "price": "649.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Graphic Design", "price": "124.99", "priceCurrency": "USD" }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "name": "Zach",
+        "url": "https://example.com/"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- Ambient background -->
+  <div class="bg" aria-hidden="true">
+    <div class="bg__grid"></div>
+    <div class="blob blob--1"></div>
+    <div class="blob blob--2"></div>
+    <div class="blob blob--3"></div>
+    <div class="bg__noise"></div>
+  </div>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <!-- Icon sprite -->
+  <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-chevron" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5l13 7.5-13 7.5z" fill="currentColor"/></symbol>
+      <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 18.6 6.1 21.3l1.2-6.6L2.5 9.5l6.6-.9z" fill="currentColor"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+      <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 16V4M7 9l5-5 5 5M5 20h14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-quote" viewBox="0 0 24 24"><path d="M9 7H5a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v1a2 2 0 0 1-2 2H4m17-12h-4a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h2v1a2 2 0 0 1-2 2h-1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h6l-1 8 9-12h-6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 7v5l3.5 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-5 4V6a1 1 0 0 1 1-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3 9h18M3 15h18M8 4v16M16 4v16" stroke="currentColor" stroke-width="1.7"/></symbol>
+      <symbol id="i-pen" viewBox="0 0 24 24"><path d="M14 4l6 6L8 22l-6 1 1-6z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 6l6 6" stroke="currentColor" stroke-width="1.7"/></symbol>
+      <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M3 12l9 5 9-5M3 16l9 5 9-5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+      <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M6 6l3 3M15 15l3 3M18 6l-3 3M9 15l-3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor"/></symbol>
+      <symbol id="i-youtube" viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M10.5 9.5l5 2.5-5 2.5z" fill="currentColor"/></symbol>
+      <symbol id="i-behance" viewBox="0 0 24 24"><path d="M3 7h5a2.5 2.5 0 0 1 0 5H3zM3 12h5.5a2.5 2.5 0 0 1 0 5H3zM15 8.5h5M14 14c.3-2 1.7-3.2 3.5-3.2 1.9 0 3.2 1.4 3.2 3.4 0 .2 0 .4-.1.6h-6.4c.2 1.4 1.1 2.2 2.4 2.2 1 0 1.7-.4 2.1-1.1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M7 10v7M7 7v.01M11 17v-4a2 2 0 0 1 4 0v4M11 10v7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ HEADER ============ -->
+  <header class="nav" id="nav" data-nav>
+    <div class="container nav__inner">
+      <a class="brand" href="#home" aria-label="Zach — home">
+        <span class="brand__mark">Z</span>
+        <span class="brand__name">Zach</span>
+      </a>
+
+      <nav class="nav__menu" id="primary-nav" aria-label="Primary">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#home">Home</a></li>
+          <li class="nav__has-sub">
+            <button class="nav__link nav__sub-toggle" aria-expanded="false" aria-controls="portfolio-sub">
+              Portfolio <svg class="ico ico--xs" aria-hidden="true"><use href="#i-chevron"/></svg>
+            </button>
+            <ul class="nav__sub glass" id="portfolio-sub">
+              <li><a href="#video"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg> Video Editing</a></li>
+              <li><a href="#graphic"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg> Graphic Design</a></li>
+            </ul>
+          </li>
+          <li><a class="nav__link" href="#services">Services</a></li>
+          <li><a class="nav__link" href="#about">About</a></li>
+          <li><a class="nav__link" href="#reviews">Reviews</a></li>
+          <li><a class="nav__link" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm hire" href="#contact" data-ripple>
+          Hire Me <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+        </a>
+        <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+          <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile drawer -->
+  <div class="drawer" id="mobileMenu" aria-hidden="true">
+    <div class="drawer__panel glass">
+      <nav aria-label="Mobile">
+        <a href="#home" class="drawer__link">Home</a>
+        <span class="drawer__group">Portfolio</span>
+        <a href="#video" class="drawer__link drawer__link--sub">Video Editing</a>
+        <a href="#graphic" class="drawer__link drawer__link--sub">Graphic Design</a>
+        <a href="#services" class="drawer__link">Services</a>
+        <a href="#process" class="drawer__link">Process</a>
+        <a href="#about" class="drawer__link">About</a>
+        <a href="#reviews" class="drawer__link">Reviews</a>
+        <a href="#contact" class="drawer__link">Contact</a>
+      </nav>
+      <a class="btn btn--primary drawer__cta" href="#contact" data-ripple>Hire Me <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+    </div>
+  </div>
+
+  <main id="main">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero section" id="home">
+      <canvas class="hero__particles" id="particles" aria-hidden="true"></canvas>
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <span class="chip reveal" data-reveal>
+            <span class="chip__dot"></span> Video Editing &amp; Graphic Design Services
+          </span>
+          <h1 class="hero__title">
+            <span class="reveal" data-reveal data-reveal-delay="1">Zach</span>
+            <span class="hero__title-grad gradient-text reveal" data-reveal data-reveal-delay="2">Bringing Ideas<br/>to Life</span>
+          </h1>
+          <p class="hero__lead reveal" data-reveal data-reveal-delay="3">
+            I'm an independent video editor, UX designer and graphic designer crafting clean,
+            professional, scroll-stopping content that captures attention and delivers results.
+          </p>
+          <div class="hero__cta reveal" data-reveal data-reveal-delay="4">
+            <a class="btn btn--primary" href="#video" data-ripple>View My Work <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+            <a class="btn btn--ghost" href="#services" data-ripple>Explore Services <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
+          </div>
+
+          <div class="hero__tools reveal" data-reveal data-reveal-delay="5" aria-label="Tools I use">
+            <figure class="tool"><img src="assets/logos/premiere.svg" alt="Adobe Premiere Pro" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Premiere&nbsp;Pro</figcaption></figure>
+            <figure class="tool"><img src="assets/logos/photoshop.svg" alt="Adobe Photoshop" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Photoshop</figcaption></figure>
+            <figure class="tool"><img src="assets/logos/aftereffects.svg" alt="Adobe After Effects" width="44" height="44" loading="lazy" decoding="async"/><figcaption>After&nbsp;Effects</figcaption></figure>
+            <figure class="tool"><img src="assets/logos/lightroom.svg" alt="Adobe Lightroom" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Lightroom</figcaption></figure>
+            <figure class="tool"><img src="assets/logos/davinci.svg" alt="DaVinci Resolve" width="44" height="44" loading="lazy" decoding="async"/><figcaption>DaVinci</figcaption></figure>
+          </div>
+        </div>
+
+        <div class="hero__visual reveal" data-reveal data-reveal-delay="3" aria-hidden="true">
+          <div class="hero__stage" data-parallax>
+            <div class="float-card float-card--main glass">
+              <img src="assets/placeholders/design-4.svg" alt="" width="300" height="375" loading="lazy" decoding="async"/>
+              <button class="play-orb" type="button" aria-hidden="true" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button>
+            </div>
+            <div class="float-card float-card--a glass" data-float><img src="assets/placeholders/design-1.svg" alt="" width="150" height="188" loading="lazy" decoding="async"/></div>
+            <div class="float-card float-card--b glass" data-float><img src="assets/placeholders/design-12.svg" alt="" width="150" height="188" loading="lazy" decoding="async"/></div>
+            <div class="float-card float-card--badge glass" data-float>
+              <svg class="ico ico--lg gradient-ico" aria-hidden="true"><use href="#i-spark"/></svg>
+              <div><strong>4+ years</strong><span>crafting visuals</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="hero__scroll" href="#featured" aria-label="Scroll to featured work">
+        <span class="hero__scroll-track"><span class="hero__scroll-thumb"></span></span>
+        Scroll
+      </a>
+    </section>
+
+    <!-- ============ FEATURED ============ -->
+    <section class="section featured" id="featured">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal>Featured Work</span>
+          <h2 class="sec-title" data-reveal>A taste of the <span class="gradient-text">craft</span></h2>
+          <p class="sec-desc" data-reveal>A curated mix of recent video edits, branding systems and design pieces — each built to feel premium and intentional.</p>
+        </header>
+
+        <div class="featured__grid">
+          <article class="feat-card glass tilt" data-reveal style="--i:0">
+            <div class="feat-card__media"><img src="assets/placeholders/design-6.svg" alt="Chromatic — digital artwork" loading="lazy" decoding="async"/><span class="tag">Motion Graphics</span></div>
+            <div class="feat-card__body"><h3>Chromatic</h3><p>Animated gradient artwork</p></div>
+          </article>
+          <article class="feat-card glass tilt" data-reveal style="--i:1">
+            <div class="feat-card__media"><img src="assets/placeholders/design-2.svg" alt="Aurora brand identity" loading="lazy" decoding="async"/><span class="tag">Branding</span></div>
+            <div class="feat-card__body"><h3>Aurora Identity</h3><p>Full brand system</p></div>
+          </article>
+          <article class="feat-card glass tilt" data-reveal style="--i:2">
+            <div class="feat-card__media"><img src="assets/placeholders/design-8.svg" alt="YouTube thumbnail design" loading="lazy" decoding="async"/><span class="tag">YouTube Edit</span></div>
+            <div class="feat-card__body"><h3>Stream Cover</h3><p>High-CTR thumbnail</p></div>
+          </article>
+          <article class="feat-card glass tilt" data-reveal style="--i:3">
+            <div class="feat-card__media"><img src="assets/placeholders/design-1.svg" alt="Think Big poster" loading="lazy" decoding="async"/><span class="tag">Poster Design</span></div>
+            <div class="feat-card__body"><h3>Think Big</h3><p>Typographic poster</p></div>
+          </article>
+          <article class="feat-card glass tilt" data-reveal style="--i:4">
+            <div class="feat-card__media"><img src="assets/placeholders/design-9.svg" alt="Lunar Studio commercial branding" loading="lazy" decoding="async"/><span class="tag">Commercial</span></div>
+            <div class="feat-card__body"><h3>Lunar Studio</h3><p>Commercial edit + brand</p></div>
+          </article>
+          <article class="feat-card glass tilt" data-reveal style="--i:5">
+            <div class="feat-card__media"><img src="assets/placeholders/design-3.svg" alt="Vertex monogram logo" loading="lazy" decoding="async"/><span class="tag">Logo</span></div>
+            <div class="feat-card__body"><h3>Vertex Mark</h3><p>Monogram logo</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VIDEO PORTFOLIO ============ -->
+    <section class="section portfolio" id="video">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg> Portfolio — Section 01</span>
+          <h2 class="sec-title" data-reveal>Video <span class="gradient-text">Editing</span></h2>
+          <p class="sec-desc" data-reveal>From fast sports recaps to cinematic brand films. Filter by category, then tap any project to play.</p>
+        </header>
+
+        <div class="filters" id="video-filters" role="tablist" aria-label="Filter video projects"></div>
+
+        <div class="gallery" id="video-grid" aria-live="polite"></div>
+
+        <div class="gallery__empty" id="video-empty" hidden>
+          <svg class="ico ico--lg" aria-hidden="true"><use href="#i-film"/></svg>
+          <p>No videos in this category yet. Drop <code>.mp4</code> files into <code>/portfolio/videos/</code>.</p>
+        </div>
+
+        <div class="loadmore">
+          <button class="btn btn--ghost" id="video-load-more" type="button" data-ripple>Load More <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ GRAPHIC PORTFOLIO ============ -->
+    <section class="section portfolio portfolio--alt" id="graphic">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg> Portfolio — Section 02</span>
+          <h2 class="sec-title" data-reveal>Graphic <span class="gradient-text">Design</span></h2>
+          <p class="sec-desc" data-reveal>Posters, branding, logos and UI. Click any piece to open it in the lightbox.</p>
+        </header>
+
+        <div class="filters" id="image-filters" role="tablist" aria-label="Filter design projects"></div>
+
+        <div class="gallery gallery--masonry" id="image-grid" aria-live="polite"></div>
+
+        <div class="gallery__empty" id="image-empty" hidden>
+          <svg class="ico ico--lg" aria-hidden="true"><use href="#i-pen"/></svg>
+          <p>No designs in this category yet. Drop images into <code>/portfolio/images/</code>.</p>
+        </div>
+
+        <div class="loadmore">
+          <button class="btn btn--ghost" id="image-load-more" type="button" data-ripple>Load More <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SERVICES ============ -->
+    <section class="section services" id="services">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal>Services &amp; Pricing</span>
+          <h2 class="sec-title" data-reveal>Simple, <span class="gradient-text">transparent</span> pricing</h2>
+          <p class="sec-desc" data-reveal>Pick a package below. Every project includes clear communication, source-quality exports and on-time delivery.</p>
+        </header>
+
+        <div class="pricing">
+          <article class="price-card glass" data-reveal style="--i:0">
+            <div class="price-card__glow" aria-hidden="true"></div>
+            <header class="price-card__head">
+              <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg></span>
+              <h3>Short-Form Video</h3>
+              <p class="price-card__sub">0–1 minute</p>
+            </header>
+            <div class="price-card__price"><span class="cur">$</span>149<span class="dec">.99</span></div>
+            <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 1–2 day delivery</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
+            </ul>
+            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Short-Form Video Editing (0–1 min)" data-ripple>Get Started</a>
+          </article>
+
+          <article class="price-card price-card--featured glass" data-reveal style="--i:1">
+            <span class="price-card__badge">Most Popular</span>
+            <div class="price-card__glow" aria-hidden="true"></div>
+            <header class="price-card__head">
+              <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg></span>
+              <h3>Long-Form Video</h3>
+              <p class="price-card__sub">1–5 minutes</p>
+            </header>
+            <div class="price-card__price"><span class="cur">$</span>649<span class="dec">.99</span></div>
+            <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $5 per minute over 5 minutes</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 3–5 day delivery</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
+            </ul>
+            <a class="btn btn--primary price-card__cta" href="#contact" data-service="Long-Form Video Editing (1–5 min)" data-ripple>Get Started</a>
+          </article>
+
+          <article class="price-card glass" data-reveal style="--i:2">
+            <div class="price-card__glow" aria-hidden="true"></div>
+            <header class="price-card__head">
+              <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg></span>
+              <h3>Graphic Design</h3>
+              <p class="price-card__sub">Posters · branding · thumbnails</p>
+            </header>
+            <div class="price-card__price"><span class="cur">$</span>124<span class="dec">.99</span></div>
+            <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 2–4 day delivery</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
+            </ul>
+            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Graphic Design" data-ripple>Get Started</a>
+          </article>
+        </div>
+        <p class="services__note" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg> All prices in USD. Custom scope? Mention it in the contact form for a tailored quote.</p>
+      </div>
+    </section>
+
+    <!-- ============ PROCESS ============ -->
+    <section class="section process" id="process">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal>How It Works</span>
+          <h2 class="sec-title" data-reveal>A clear, calm <span class="gradient-text">process</span></h2>
+          <p class="sec-desc" data-reveal>Seven simple steps from first message to final delivery — no guesswork, no surprises.</p>
+        </header>
+
+        <ol class="timeline">
+          <li class="timeline__item" data-reveal style="--i:0"><span class="timeline__num">01</span><div class="timeline__card glass"><h3>Submit a request</h3><p>Send your brief, footage, assets and goals through the contact form.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:1"><span class="timeline__num">02</span><div class="timeline__card glass"><h3>I review details</h3><p>I confirm scope, timeline and the exact deliverables with you.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:2"><span class="timeline__num">03</span><div class="timeline__card glass"><h3>25–50% upfront</h3><p>A deposit secures your slot and kicks off the project.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:3"><span class="timeline__num">04</span><div class="timeline__card glass"><h3>Work begins</h3><p>I craft the first cut or concept with care and attention to detail.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:4"><span class="timeline__num">05</span><div class="timeline__card glass"><h3>Client review</h3><p>You review and request revisions until it feels right.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:5"><span class="timeline__num">06</span><div class="timeline__card glass"><h3>Final payment</h3><p>Once approved, the remaining balance is settled.</p></div></li>
+          <li class="timeline__item" data-reveal style="--i:6"><span class="timeline__num">07</span><div class="timeline__card glass"><h3>Files delivered</h3><p>You receive the final, high-quality, watermark-free files.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section about" id="about">
+      <div class="container about__grid">
+        <div class="about__portrait reveal" data-reveal>
+          <div class="about__portrait-frame glass">
+            <img src="assets/placeholders/portrait.svg" alt="Portrait placeholder of Zach" width="360" height="440" loading="lazy" decoding="async"/>
+          </div>
+          <div class="about__portrait-badge glass" data-float>
+            <svg class="ico gradient-ico" aria-hidden="true"><use href="#i-spark"/></svg> Available for work
+          </div>
+        </div>
+
+        <div class="about__copy">
+          <span class="eyebrow" data-reveal>About Me</span>
+          <h2 class="sec-title" data-reveal>Designing &amp; editing with <span class="gradient-text">intent</span></h2>
+          <p class="sec-desc" data-reveal>
+            I'm an independent video editor, graphic designer and UX designer with over four years of
+            experience in Adobe Premiere Pro, Photoshop and Lightroom. My work blends creativity with
+            strong attention to detail to produce polished visuals that leave a lasting impression.
+          </p>
+
+          <div class="stats" data-reveal>
+            <div class="stat"><span class="stat__num" data-count="4" data-suffix="+">0</span><span class="stat__label">Years experience</span></div>
+            <div class="stat"><span class="stat__num" data-count="120" data-suffix="+">0</span><span class="stat__label">Projects delivered</span></div>
+            <div class="stat"><span class="stat__num" data-count="60" data-suffix="+">0</span><span class="stat__label">Happy clients</span></div>
+            <div class="stat"><span class="stat__num" data-count="98" data-suffix="%">0</span><span class="stat__label">On-time rate</span></div>
+          </div>
+
+          <div class="about__tools" data-reveal>
+            <span class="soft-card glass"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg> Premiere Pro</span>
+            <span class="soft-card glass"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg> Photoshop</span>
+            <span class="soft-card glass"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg> Lightroom</span>
+            <span class="soft-card glass"><svg class="ico" aria-hidden="true"><use href="#i-spark"/></svg> After Effects</span>
+          </div>
+
+          <a class="btn btn--ghost" href="#contact" data-ripple>Learn more / get in touch <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REVIEWS ============ -->
+    <section class="section reviews" id="reviews">
+      <div class="container">
+        <header class="sec-head">
+          <span class="eyebrow" data-reveal>Reviews</span>
+          <h2 class="sec-title" data-reveal>Loved by <span class="gradient-text">creators &amp; brands</span></h2>
+          <p class="sec-desc" data-reveal>A few words from people I've worked with. Want to add yours? Leave a review below.</p>
+        </header>
+      </div>
+
+      <div class="marquee" aria-label="Client testimonials">
+        <div class="marquee__track" id="reviewMarquee">
+          <!-- testimonial cards injected by reviews.js, with a static fallback below -->
+          <noscript>
+            <figure class="t-card glass"><blockquote>"Incredible turnaround and the edit looked premium."</blockquote><figcaption>— Jordan, YouTuber</figcaption></figure>
+          </noscript>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="review-form-wrap glass" data-reveal>
+          <div class="review-form-wrap__intro">
+            <h3>Leave a review</h3>
+            <p>Reviews are sent privately to Zach and are not published automatically. You can submit one review every 7 days.</p>
+          </div>
+          <form class="review-form" id="reviewForm" novalidate>
+            <div class="field">
+              <label for="r-name">Name</label>
+              <input id="r-name" name="name" type="text" autocomplete="name" required maxlength="80" />
+              <small class="field__error" data-error-for="r-name"></small>
+            </div>
+            <div class="field">
+              <label for="r-email">Email</label>
+              <input id="r-email" name="email" type="email" autocomplete="email" required />
+              <small class="field__error" data-error-for="r-email"></small>
+            </div>
+            <div class="field">
+              <span class="field__label">Rating</span>
+              <div class="stars" id="ratingStars" role="radiogroup" aria-label="Star rating">
+                <button type="button" class="stars__btn" role="radio" aria-checked="false" data-value="1" aria-label="1 star"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></button>
+                <button type="button" class="stars__btn" role="radio" aria-checked="false" data-value="2" aria-label="2 stars"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></button>
+                <button type="button" class="stars__btn" role="radio" aria-checked="false" data-value="3" aria-label="3 stars"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></button>
+                <button type="button" class="stars__btn" role="radio" aria-checked="false" data-value="4" aria-label="4 stars"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></button>
+                <button type="button" class="stars__btn" role="radio" aria-checked="false" data-value="5" aria-label="5 stars"><svg class="ico" aria-hidden="true"><use href="#i-star"/></svg></button>
+              </div>
+              <input type="hidden" name="rating" id="r-rating" value="" />
+              <small class="field__error" data-error-for="r-rating"></small>
+            </div>
+            <div class="field field--full">
+              <label for="r-review">Review</label>
+              <textarea id="r-review" name="review" rows="4" required maxlength="600"></textarea>
+              <small class="field__error" data-error-for="r-review"></small>
+            </div>
+            <!-- hidden submission type + honeypot -->
+            <input type="hidden" name="formType" value="review" />
+            <div class="hp" aria-hidden="true"><label>Company<input type="text" name="company" tabindex="-1" autocomplete="off" /></label></div>
+            <div class="field field--full review-form__foot">
+              <button class="btn btn--primary" id="reviewSubmit" type="submit" data-ripple>Submit review <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+              <p class="form-status" id="reviewStatus" role="status" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section contact" id="contact">
+      <div class="container contact__grid">
+        <div class="contact__aside">
+          <span class="eyebrow" data-reveal>Contact</span>
+          <h2 class="sec-title" data-reveal>Let's build something <span class="gradient-text">unforgettable</span></h2>
+          <p class="sec-desc" data-reveal>Tell me about your project and I'll get back to you within 24 hours. The more detail, the better the quote.</p>
+
+          <ul class="contact__info" data-reveal>
+            <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></span><div><strong>Email</strong><a href="mailto:hello@zach.studio">hello@zach.studio</a></div></li>
+            <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><div><strong>Response time</strong><span>Within 24 hours</span></div></li>
+            <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg></span><div><strong>Availability</strong><span>Taking new projects</span></div></li>
+          </ul>
+
+          <div class="contact__social" data-reveal aria-label="Social links">
+            <a href="#" aria-label="Instagram" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+            <a href="#" aria-label="YouTube" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+            <a href="#" aria-label="Behance" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-behance"/></svg></a>
+            <a href="#" aria-label="LinkedIn" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+          </div>
+        </div>
+
+        <form class="contact__form glass" id="contactForm" novalidate data-reveal>
+          <div class="field">
+            <label for="c-name">Name <span class="req" aria-hidden="true">*</span></label>
+            <input id="c-name" name="name" type="text" autocomplete="name" required maxlength="80" />
+            <small class="field__error" data-error-for="c-name"></small>
+          </div>
+          <div class="field">
+            <label for="c-email">Email <span class="req" aria-hidden="true">*</span></label>
+            <input id="c-email" name="email" type="email" autocomplete="email" inputmode="email" required />
+            <small class="field__error" data-error-for="c-email"></small>
+          </div>
+          <div class="field">
+            <label for="c-service">Service requested <span class="req" aria-hidden="true">*</span></label>
+            <select id="c-service" name="service" required>
+              <option value="" disabled selected>Choose a service…</option>
+              <option>Short-Form Video Editing (0–1 min)</option>
+              <option>Long-Form Video Editing (1–5 min)</option>
+              <option>Graphic Design</option>
+              <option>Motion Graphics</option>
+              <option>Other / Custom</option>
+            </select>
+            <small class="field__error" data-error-for="c-service"></small>
+          </div>
+          <div class="field">
+            <label for="c-budget">Budget</label>
+            <select id="c-budget" name="budget">
+              <option value="" disabled selected>Select a range…</option>
+              <option>Under $150</option>
+              <option>$150 – $500</option>
+              <option>$500 – $1,000</option>
+              <option>$1,000+</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="c-subject">Subject <span class="req" aria-hidden="true">*</span></label>
+            <input id="c-subject" name="subject" type="text" required maxlength="120" />
+            <small class="field__error" data-error-for="c-subject"></small>
+          </div>
+          <div class="field field--full">
+            <label for="c-message">Message <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="c-message" name="message" rows="5" required maxlength="1500"></textarea>
+            <small class="field__error" data-error-for="c-message"></small>
+          </div>
+          <div class="field field--full">
+            <span class="field__label">Attachment <span class="field__hint">(optional · max 10MB)</span></span>
+            <label class="filedrop" for="c-file">
+              <svg class="ico ico--lg" aria-hidden="true"><use href="#i-upload"/></svg>
+              <span class="filedrop__text" id="fileLabel">Drop a file or <u>browse</u></span>
+              <input id="c-file" name="attachment" type="file" accept="image/*,video/*,.pdf,.zip" />
+            </label>
+          </div>
+
+          <!-- honeypot + timing handled in contact.js -->
+          <div class="hp" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off" /></label></div>
+
+          <div class="field field--full contact__form-foot">
+            <button class="btn btn--primary btn--lg" id="contactSubmit" type="submit" data-ripple>
+              <span class="btn__label">Send message</span>
+              <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg>
+            </button>
+            <p class="form-status" id="contactStatus" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="brand" href="#home"><span class="brand__mark">Z</span><span class="brand__name">Zach</span></a>
+        <p>Video editor, graphic designer &amp; UX designer. Bringing ideas to life with cinematic, premium visuals.</p>
+        <a class="footer__email" href="mailto:hello@zach.studio"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> hello@zach.studio</a>
+      </div>
+      <nav class="footer__nav" aria-label="Footer">
+        <h4>Explore</h4>
+        <a href="#home">Home</a>
+        <a href="#video">Video Editing</a>
+        <a href="#graphic">Graphic Design</a>
+        <a href="#services">Services</a>
+      </nav>
+      <nav class="footer__nav" aria-label="More">
+        <h4>Studio</h4>
+        <a href="#process">Process</a>
+        <a href="#about">About</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <div class="footer__connect">
+        <h4>Connect</h4>
+        <div class="contact__social">
+          <a href="#" aria-label="Instagram" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-instagram"/></svg></a>
+          <a href="#" aria-label="YouTube" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-youtube"/></svg></a>
+          <a href="#" aria-label="Behance" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-behance"/></svg></a>
+          <a href="#" aria-label="LinkedIn" class="soc"><svg class="ico" aria-hidden="true"><use href="#i-linkedin"/></svg></a>
+        </div>
+        <a class="btn btn--primary btn--sm" href="#contact" data-ripple>Start a project</a>
+      </div>
+    </div>
+    <div class="container footer__bar">
+      <p>© <span id="year">2026</span> Zach. All rights reserved.</p>
+      <p class="footer__made">Crafted with precision &amp; a love for detail.</p>
+    </div>
+  </footer>
+
+  <button class="to-top" id="toTop" aria-label="Back to top" hidden>
+    <svg class="ico" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+  </button>
+
+  <!-- ============ MEDIA MODAL (video + lightbox) ============ -->
+  <div class="modal" id="mediaModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Media viewer">
+    <div class="modal__backdrop" data-close></div>
+    <div class="modal__panel glass" role="document">
+      <button class="modal__close" data-close aria-label="Close"><svg class="ico" aria-hidden="true"><use href="#i-close"/></svg></button>
+      <div class="modal__stage" id="modalStage"></div>
+      <div class="modal__meta">
+        <span class="tag" id="modalCat"></span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/gallery.js" defer></script>
+  <script src="js/reviews.js" defer></script>
+  <script src="js/contact.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+name: Update gallery manifests
+
+# Rebuilds portfolio/videos.json and portfolio/images.json whenever media changes.
+# Triggers only on the media subfolders (not the *.json files) so the commit-back
+# from this workflow does not re-trigger it.
+on:
+  push:
+    paths:
+      - "portfolio/images/**"
+      - "portfolio/videos/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-gallery
+  cancel-in-progress: true
+
+jobs:
+  manifest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate manifests
+        run: node scripts/generate-gallery-manifest.js
+
+      - name: Commit updated manifests
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add portfolio/videos.json portfolio/images.json
+          if git diff --cached --quiet; then
+            echo "No manifest changes to commit."
+          else
+            git commit -m "chore: regenerate gallery manifests [skip ci]"
+            git push
+          fi
