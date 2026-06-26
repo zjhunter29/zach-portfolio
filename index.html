@@ -36,7 +36,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Sora:wght@400;600;700;800&display=swap" />
 
   <link rel="stylesheet" href="css/styles.css" />
 
@@ -83,15 +83,7 @@
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- Ambient background -->
-  <div class="bg" aria-hidden="true">
-    <div class="bg__grid"></div>
-    <div class="blob blob--1"></div>
-    <div class="blob blob--2"></div>
-    <div class="blob blob--3"></div>
-    <div class="bg__noise"></div>
-  </div>
-  <div class="cursor-glow" aria-hidden="true"></div>
+  <!-- Background is a solid 135 degree dark gradient applied to body via CSS -->
 
   <!-- Icon sprite -->
   <svg width="0" height="0" class="sprite" aria-hidden="true" focusable="false">
@@ -183,8 +175,7 @@
   <main id="main">
 
     <!-- ============ HERO ============ -->
-    <section class="hero section" id="home">
-      <canvas class="hero__particles" id="particles" aria-hidden="true"></canvas>
+    <section class="hero section" id="home" data-page="home">
       <div class="container hero__grid">
         <div class="hero__copy">
           <span class="chip reveal" data-reveal>
@@ -208,22 +199,6 @@
             <figure class="tool"><img src="assets/logos/photoshop.svg" alt="Adobe Photoshop" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Photoshop</figcaption></figure>
             <figure class="tool"><img src="assets/logos/aftereffects.svg" alt="Adobe After Effects" width="44" height="44" loading="lazy" decoding="async"/><figcaption>After&nbsp;Effects</figcaption></figure>
             <figure class="tool"><img src="assets/logos/lightroom.svg" alt="Adobe Lightroom" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Lightroom</figcaption></figure>
-            <figure class="tool"><img src="assets/logos/davinci.svg" alt="DaVinci Resolve" width="44" height="44" loading="lazy" decoding="async"/><figcaption>DaVinci</figcaption></figure>
-          </div>
-        </div>
-
-        <div class="hero__visual reveal" data-reveal data-reveal-delay="3" aria-hidden="true">
-          <div class="hero__stage" data-parallax>
-            <div class="float-card float-card--main glass">
-              <img src="assets/placeholders/design-4.svg" alt="" width="300" height="375" loading="lazy" decoding="async"/>
-              <button class="play-orb" type="button" aria-hidden="true" tabindex="-1"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></button>
-            </div>
-            <div class="float-card float-card--a glass" data-float><img src="assets/placeholders/design-1.svg" alt="" width="150" height="188" loading="lazy" decoding="async"/></div>
-            <div class="float-card float-card--b glass" data-float><img src="assets/placeholders/design-12.svg" alt="" width="150" height="188" loading="lazy" decoding="async"/></div>
-            <div class="float-card float-card--badge glass" data-float>
-              <svg class="ico ico--lg gradient-ico" aria-hidden="true"><use href="#i-spark"/></svg>
-              <div><strong>4+ years</strong><span>crafting visuals</span></div>
-            </div>
           </div>
         </div>
       </div>
@@ -235,7 +210,7 @@
     </section>
 
     <!-- ============ FEATURED ============ -->
-    <section class="section featured" id="featured">
+    <section class="section featured" id="featured" data-page="home">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal>Featured Work</span>
@@ -273,7 +248,7 @@
     </section>
 
     <!-- ============ VIDEO PORTFOLIO ============ -->
-    <section class="section portfolio" id="video">
+    <section class="section portfolio" id="video" data-page="video">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg> Portfolio — Section 01</span>
@@ -281,14 +256,7 @@
           <p class="sec-desc" data-reveal>From fast sports recaps to cinematic brand films. Filter by category, then tap any project to play.</p>
         </header>
 
-        <div class="filters" id="video-filters" role="tablist" aria-label="Filter video projects"></div>
-
         <div class="gallery" id="video-grid" aria-live="polite"></div>
-
-        <div class="gallery__empty" id="video-empty" hidden>
-          <svg class="ico ico--lg" aria-hidden="true"><use href="#i-film"/></svg>
-          <p>No videos in this category yet. Drop <code>.mp4</code> files into <code>/portfolio/videos/</code>.</p>
-        </div>
 
         <div class="loadmore">
           <button class="btn btn--ghost" id="video-load-more" type="button" data-ripple>Load More <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></button>
@@ -297,7 +265,7 @@
     </section>
 
     <!-- ============ GRAPHIC PORTFOLIO ============ -->
-    <section class="section portfolio portfolio--alt" id="graphic">
+    <section class="section portfolio portfolio--alt" id="graphic" data-page="graphic">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg> Portfolio — Section 02</span>
@@ -305,14 +273,7 @@
           <p class="sec-desc" data-reveal>Posters, branding, logos and UI. Click any piece to open it in the lightbox.</p>
         </header>
 
-        <div class="filters" id="image-filters" role="tablist" aria-label="Filter design projects"></div>
-
         <div class="gallery gallery--masonry" id="image-grid" aria-live="polite"></div>
-
-        <div class="gallery__empty" id="image-empty" hidden>
-          <svg class="ico ico--lg" aria-hidden="true"><use href="#i-pen"/></svg>
-          <p>No designs in this category yet. Drop images into <code>/portfolio/images/</code>.</p>
-        </div>
 
         <div class="loadmore">
           <button class="btn btn--ghost" id="image-load-more" type="button" data-ripple>Load More <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></button>
@@ -321,7 +282,7 @@
     </section>
 
     <!-- ============ SERVICES ============ -->
-    <section class="section services" id="services">
+    <section class="section services" id="services" data-page="services">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal>Services &amp; Pricing</span>
@@ -341,9 +302,7 @@
             <ul class="price-card__list">
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 1–2 day delivery</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
-            </ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 1–2 day delivery</li>            </ul>
             <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Short-Form Video Editing (0–1 min)" data-ripple>Get Started</a>
           </article>
 
@@ -359,9 +318,7 @@
             <ul class="price-card__list">
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $5 per minute over 5 minutes</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 3–5 day delivery</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
-            </ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 3–5 day delivery</li>            </ul>
             <a class="btn btn--primary price-card__cta" href="#contact" data-service="Long-Form Video Editing (1–5 min)" data-ripple>Get Started</a>
           </article>
 
@@ -376,9 +333,7 @@
             <ul class="price-card__list">
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 2–4 day delivery</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Remove watermark (+$5)</li>
-            </ul>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 2–4 day delivery</li>            </ul>
             <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Graphic Design" data-ripple>Get Started</a>
           </article>
         </div>
@@ -387,7 +342,7 @@
     </section>
 
     <!-- ============ PROCESS ============ -->
-    <section class="section process" id="process">
+    <section class="section process" id="process" data-page="services">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal>How It Works</span>
@@ -408,7 +363,7 @@
     </section>
 
     <!-- ============ ABOUT ============ -->
-    <section class="section about" id="about">
+    <section class="section about" id="about" data-page="about">
       <div class="container about__grid">
         <div class="about__portrait reveal" data-reveal>
           <div class="about__portrait-frame glass">
@@ -448,7 +403,7 @@
     </section>
 
     <!-- ============ REVIEWS ============ -->
-    <section class="section reviews" id="reviews">
+    <section class="section reviews" id="reviews" data-page="reviews">
       <div class="container">
         <header class="sec-head">
           <span class="eyebrow" data-reveal>Reviews</span>
@@ -513,7 +468,7 @@
     </section>
 
     <!-- ============ CONTACT ============ -->
-    <section class="section contact" id="contact">
+    <section class="section contact" id="contact" data-page="contact">
       <div class="container contact__grid">
         <div class="contact__aside">
           <span class="eyebrow" data-reveal>Contact</span>
@@ -521,7 +476,6 @@
           <p class="sec-desc" data-reveal>Tell me about your project and I'll get back to you within 24 hours. The more detail, the better the quote.</p>
 
           <ul class="contact__info" data-reveal>
-            <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg></span><div><strong>Email</strong><a href="mailto:hello@zach.studio">hello@zach.studio</a></div></li>
             <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-clock"/></svg></span><div><strong>Response time</strong><span>Within 24 hours</span></div></li>
             <li class="glass"><span class="contact__ico"><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg></span><div><strong>Availability</strong><span>Taking new projects</span></div></li>
           </ul>
@@ -607,7 +561,6 @@
       <div class="footer__brand">
         <a class="brand" href="#home"><span class="brand__mark">Z</span><span class="brand__name">Zach</span></a>
         <p>Video editor, graphic designer &amp; UX designer. Bringing ideas to life with cinematic, premium visuals.</p>
-        <a class="footer__email" href="mailto:hello@zach.studio"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> hello@zach.studio</a>
       </div>
       <nav class="footer__nav" aria-label="Footer">
         <h4>Explore</h4>

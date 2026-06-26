@@ -1,10 +1,12 @@
 /* =========================================================
-   gallery.js — portfolio loading, filtering, modal/lightbox
+   gallery.js — portfolio loading, modal video + lightbox
    Loads from /portfolio/videos.json and /portfolio/images.json.
    Falls back to embedded data when opened from file:// (no fetch).
+   Video metadata (title / category / duration) is whatever the
+   manifest contains — the GitHub Action / generator writes it
+   from each .mp4 file you add.
    ========================================================= */
 (() => {
-  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const reveal = window.observeReveal || ((el) => el.classList.add("in"));
 
   /* ---------- embedded fallback (mirrors the JSON manifests) ---------- */
@@ -43,7 +45,7 @@
       const items = Array.isArray(data) ? data : data.items;
       return Array.isArray(items) && items.length ? items : FALLBACK[key];
     } catch {
-      return FALLBACK[key]; // file:// or missing manifest
+      return FALLBACK[key];
     }
   }
 
@@ -72,7 +74,7 @@
     modal.classList.remove("is-open");
     modal.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
-    stage.innerHTML = ""; // stops any playing video
+    stage.innerHTML = "";
     lastFocused?.focus?.();
   }
   modal.addEventListener("click", (e) => { if (e.target.closest("[data-close]")) closeModal(); });
@@ -81,32 +83,20 @@
   const openVideo = (item) => {
     const html = item.src
       ? `<video controls autoplay playsinline preload="metadata" poster="${esc(item.thumbnail)}"><source src="${esc(item.src)}" type="video/mp4">Your browser does not support video.</video>`
-      : `<div class="modal__placeholder"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg><p><strong>Preview coming soon.</strong><br>Add <code>${esc(item.title)}.mp4</code> to <code>/portfolio/videos/</code> and set its <code>src</code> in <code>videos.json</code>.</p></div>`;
+      : `<div class="modal__placeholder"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg><p><strong>Preview coming soon.</strong><br>Add <code>${esc(item.title)}.mp4</code> to <code>/portfolio/videos/</code> and its <code>src</code> in <code>videos.json</code>.</p></div>`;
     openModal(html, item);
   };
   const openImage = (item) =>
     openModal(`<img src="${esc(item.src)}" alt="${esc(item.title)} — ${esc(item.category)}">`, item);
 
-  /* ---------- gallery controller ---------- */
-  function setupGallery({ items, type, gridId, filtersId, emptyId, loadMoreId, pageSize = 6 }) {
+  /* ---------- gallery controller (no filters) ---------- */
+  function setupGallery({ items, type, gridId, loadMoreId, pageSize = 6 }) {
     const grid = document.getElementById(gridId);
-    const filtersEl = document.getElementById(filtersId);
-    const emptyEl = document.getElementById(emptyId);
     const loadBtn = document.getElementById(loadMoreId);
     if (!grid) return;
-
-    let active = "All";
     let shown = pageSize;
 
-    const cats = ["All", ...[...new Set(items.map((i) => i.category).filter(Boolean))]];
-    filtersEl.setAttribute("role", "group");
-    filtersEl.innerHTML = cats.map((c, i) =>
-      `<button class="filter-btn${i === 0 ? " is-active" : ""}" data-cat="${esc(c)}" aria-pressed="${i === 0}">${esc(c)}</button>`
-    ).join("");
-
-    const filtered = () => active === "All" ? items : items.filter((i) => i.category === active);
-
-    function cardHTML(item, idx) {
+    const cardHTML = (item, idx) => {
       if (type === "video") {
         return `<article class="card card--video" tabindex="0" role="button" aria-label="Play ${esc(item.title)}" data-id="${esc(item.id)}" style="--i:${idx % pageSize}">
           <div class="card__media">
@@ -130,42 +120,26 @@
             <h3 class="card__title">${esc(item.title)}</h3>
           </div>
         </div></article>`;
-    }
+    };
 
     function render() {
-      const list = filtered();
-      const visible = list.slice(0, shown);
-      grid.innerHTML = visible.map(cardHTML).join("");
-      emptyEl.hidden = list.length !== 0;
-      grid.hidden = list.length === 0;
-      loadBtn.hidden = shown >= list.length;
+      grid.innerHTML = items.slice(0, shown).map(cardHTML).join("");
+      loadBtn.hidden = shown >= items.length;
       grid.querySelectorAll(".card").forEach((c) => reveal(c));
+      window.revealCheck && window.revealCheck();
     }
 
-    grid.addEventListener("click", (e) => {
-      const card = e.target.closest(".card"); if (!card) return;
-      const item = items.find((i) => i.id === card.dataset.id); if (!item) return;
+    const open = (card) => {
+      const item = items.find((i) => i.id === card.dataset.id);
+      if (!item) return;
       type === "video" ? openVideo(item) : openImage(item);
-    });
+    };
+    grid.addEventListener("click", (e) => { const c = e.target.closest(".card"); if (c) open(c); });
     grid.addEventListener("keydown", (e) => {
       if (e.key !== "Enter" && e.key !== " ") return;
-      const card = e.target.closest(".card"); if (!card) return;
-      e.preventDefault();
-      const item = items.find((i) => i.id === card.dataset.id); if (!item) return;
-      type === "video" ? openVideo(item) : openImage(item);
+      const c = e.target.closest(".card"); if (!c) return;
+      e.preventDefault(); open(c);
     });
-
-    filtersEl.addEventListener("click", (e) => {
-      const btn = e.target.closest(".filter-btn"); if (!btn) return;
-      active = btn.dataset.cat; shown = pageSize;
-      filtersEl.querySelectorAll(".filter-btn").forEach((b) => {
-        const on = b === btn;
-        b.classList.toggle("is-active", on);
-        b.setAttribute("aria-pressed", String(on));
-      });
-      render();
-    });
-
     loadBtn.addEventListener("click", () => { shown += pageSize; render(); });
 
     render();
@@ -176,7 +150,7 @@
     loadItems("portfolio/videos.json", "videos"),
     loadItems("portfolio/images.json", "images")
   ]).then(([videos, images]) => {
-    setupGallery({ items: videos, type: "video", gridId: "video-grid", filtersId: "video-filters", emptyId: "video-empty", loadMoreId: "video-load-more", pageSize: 6 });
-    setupGallery({ items: images, type: "image", gridId: "image-grid", filtersId: "image-filters", emptyId: "image-empty", loadMoreId: "image-load-more", pageSize: 8 });
+    setupGallery({ items: videos, type: "video", gridId: "video-grid", loadMoreId: "video-load-more", pageSize: 6 });
+    setupGallery({ items: images, type: "image", gridId: "image-grid", loadMoreId: "image-load-more", pageSize: 8 });
   });
 })();

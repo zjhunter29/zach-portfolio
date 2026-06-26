@@ -118,7 +118,7 @@
       window.toast && window.toast("Message sent successfully!");
     } catch (err) {
       statusEl.className = "form-status is-err";
-      statusEl.textContent = "Couldn't send right now. Please try again or email hello@zach.studio.";
+      statusEl.textContent = "Couldn't send right now. Please try again in a moment.";
     } finally {
       submitBtn.classList.remove("is-loading");
       submitBtn.disabled = false;

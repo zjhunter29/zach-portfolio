@@ -80,6 +80,53 @@ function findThumb(base) {
   return DEFAULT_THUMB;
 }
 
+/* --- Read the real duration of an .mp4 by parsing its 'mvhd' atom.
+   Dependency-free. Returns "M:SS" (or "H:MM:SS"), or "" if unreadable. --- */
+function fmtTime(sec) {
+  sec = Math.round(sec);
+  const h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
+  const pad = (n) => String(n).padStart(2, "0");
+  return h ? `${h}:${pad(m)}:${pad(s)}` : `${m}:${pad(s)}`;
+}
+function parseMvhd(buf) {
+  const idx = buf.indexOf(Buffer.from("mvhd"));
+  if (idx < 0) return "";
+  try {
+    const version = buf[idx + 4];
+    let timescale, duration;
+    if (version === 1) {
+      timescale = buf.readUInt32BE(idx + 24);
+      duration = Number(buf.readBigUInt64BE(idx + 28));
+    } else {
+      timescale = buf.readUInt32BE(idx + 16);
+      duration = buf.readUInt32BE(idx + 20);
+    }
+    if (!timescale || !duration) return "";
+    return fmtTime(duration / timescale);
+  } catch { return ""; }
+}
+function getMp4Duration(file) {
+  let fd;
+  try {
+    const size = fs.statSync(file).size;
+    fd = fs.openSync(file, "r");
+    const chunk = Math.min(size, 5 * 1024 * 1024); // moov is usually near start (faststart) or end
+    const head = Buffer.alloc(chunk);
+    fs.readSync(fd, head, 0, chunk, 0);
+    let out = parseMvhd(head);
+    if (!out && size > chunk) {
+      const tail = Buffer.alloc(chunk);
+      fs.readSync(fd, tail, 0, chunk, size - chunk);
+      out = parseMvhd(tail);
+    }
+    return out;
+  } catch {
+    return "";
+  } finally {
+    if (fd !== undefined) try { fs.closeSync(fd); } catch {}
+  }
+}
+
 function build(kind) {
   const isVideo = kind === "videos";
   const files = listFiles(DIR[kind], isVideo ? VIDEO_EXT : IMAGE_EXT);
@@ -105,7 +152,8 @@ function build(kind) {
     };
     if (isVideo) {
       item.thumbnail = prev.thumbnail || findThumb(base);
-      item.duration = prev.duration || "";
+      // Always read the real duration from the file so the site matches the video.
+      item.duration = getMp4Duration(path.join(DIR.videos, file)) || prev.duration || "";
     }
     return item;
   });

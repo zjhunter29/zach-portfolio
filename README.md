@@ -99,8 +99,9 @@ success state but don't send anything — check the browser console for a notice
    `Cinematic__Skyline-Brand-Film.mp4` → category **Cinematic**, title **Skyline Brand Film**.
 4. Commit & push. The GitHub Action regenerates `portfolio/videos.json` automatically.
 
-Available video filter categories (edit by changing the `Category` part of filenames): **Sports, Commercial,
-Cinematic, YouTube, Gaming, Promotional, Motion Graphics** — any new category name simply becomes a new filter chip.
+The **duration is read automatically** from each `.mp4` (a 30-second clip shows `0:30`), and the **title and
+category come from the filename** — so the card on the site always matches the actual file. The category is shown
+as a label on each card (the on-page filter buttons were intentionally removed for a cleaner look).
 
 To run the generator locally instead of waiting for CI:
 ```bash
@@ -111,19 +112,18 @@ node scripts/generate-gallery-manifest.js
 
 Same flow, into **`/portfolio/images/`**. Supported: **PNG, JPG, JPEG, WEBP**.
 Use `Category__My-Title.png` (e.g. `Branding__Aurora-Identity.png`). Commit & push and the Action rebuilds
-`portfolio/images.json`. Design filter categories: **Thumbnails, Posters, Branding, Logos, UI Design, Social
-Media, Artwork, Print Design** (or any custom category from a filename).
+`portfolio/images.json`. The category appears as a label on each design card.
 
 ---
 
 ## How the gallery automation works
 
 - The site renders **exclusively** from `portfolio/videos.json` and `portfolio/images.json`
-  (see `js/gallery.js`). Filter chips are generated from the categories present in those files.
+  (see `js/gallery.js`). Each item's category is shown as a label on its card.
 - **`scripts/generate-gallery-manifest.js`** scans the media folders and rebuilds the manifests:
-  - Title/category come from the filename (`Category__Title.ext`).
-  - **Existing `title`, `category`, `description` and `duration` values are preserved** on regeneration, so any
-    manual edits you make to the JSON are never overwritten.
+  - Title/category come from the filename (`Category__Title.ext`); **video duration is parsed from the `.mp4`**.
+  - **Existing `title`, `category` and `description` values are preserved** on regeneration, so manual edits to
+    the JSON are never overwritten (duration is always refreshed from the file).
   - If a media folder is **empty**, its manifest is **left untouched** — that's why the curated placeholder
     items keep showing until you add real media.
 - **`.github/workflows/update-gallery.yml`** runs the generator on every push that touches
@@ -168,24 +168,23 @@ The same prices are mirrored in the **JSON-LD** structured data (`<script type="
 All colors are CSS custom properties at the top of **`css/styles.css`** under `:root`. Key tokens:
 
 ```css
---bg: #050507;            /* page background            */
---accent: #5b8cff;        /* primary electric blue      */
---grad: linear-gradient(120deg, #5b8cff, #6366f1, #a855f7);  /* brand gradient */
---glow: 91,140,255;       /* RGB used for glow shadows   */
---text / --text-soft / --text-muted;  /* type colors    */
+--accent: #3b9eff;        /* primary glowing blue            */
+--grad: linear-gradient(135deg, #1f6fff, #4da3ff);  /* glowing-blue brand gradient */
+--glow: 59,158,255;       /* RGB used for glow shadows       */
+--text / --text-soft / --text-muted;  /* type colors        */
 ```
 
-Change these once and the whole site (buttons, glows, gradients, glass) updates.
+Change these once and the whole site (buttons, glows, gradients, glass) updates. The page **background** is a
+135° gradient set on `body`: `linear-gradient(135deg, #070709, #15161c)`.
 
 ## Edit animations
 
 - **Durations / easing:** tokens `--t`, `--t-fast`, `--ease`, `--ease-out` in `:root`.
 - **Scroll reveals:** the `[data-reveal]` system in `js/animations.js` + the `[data-reveal]` rules at the
   bottom of `styles.css`. Stagger is controlled by `--i` (and `data-reveal-delay` on hero elements).
-- **Ambient blobs / marquee / particles:** keyframes `drift1/2/3`, `marquee`, and the canvas field in
-  `animations.js`.
+- **Marquee:** the testimonial scroller uses the `marquee` keyframes in `styles.css`.
 - **Reduced motion:** everything is automatically minimized under
-  `@media (prefers-reduced-motion: reduce)` — particles and the cursor glow are disabled entirely.
+  `@media (prefers-reduced-motion: reduce)`.
 
 ## Replace placeholder content
 
@@ -193,7 +192,6 @@ Change these once and the whole site (buttons, glows, gradients, glass) updates.
 |------|-------|
 | Name / brand "Zach" | `index.html` (brand, hero `<h1>`, footer), `assets/icons/favicon.svg` |
 | Hero copy & subtitle | `.hero__copy` in `index.html` |
-| Email `hello@zach.studio` | `index.html` (contact list + footer) |
 | Social links (`href="#"`) | contact + footer `.contact__social` |
 | Portrait | replace `assets/placeholders/portrait.svg` |
 | OG share image | replace `assets/placeholders/og-image.svg` (a 1200×630 PNG/JPG is best for social) |
@@ -202,6 +200,15 @@ Change these once and the whole site (buttons, glows, gradients, glass) updates.
 | Stats / counters | `data-count` attributes in the About section |
 
 The placeholder visuals were generated programmatically; they're real SVG files you can freely overwrite.
+
+---
+
+## Navigation
+
+The site behaves like **separate pages**: each nav item (Home, Video Editing, Graphic Design, Services, About,
+Reviews, Contact) shows only its own section — there is no single continuous scroll. It's still one `index.html`;
+`js/app.js` holds a tiny hash router (`showPage`) that maps each nav target to a page via the `data-page`
+attribute on each `<section>`. Process lives on the Services page; Featured lives on Home.
 
 ---
 

@@ -1,23 +1,23 @@
 /* =========================================================
-   app.js — global config, navigation, UI behaviours
+   app.js — global config, page router, navigation, UI
    ========================================================= */
 
 /* ---------------------------------------------------------
    CONFIG  ·  EDIT THIS ONE LINE
    Paste your Formbold form endpoint between the quotes.
-   It is shared by BOTH the contact form and the review form.
+   Shared by BOTH the contact form and the review form.
    e.g. "https://formbold.com/s/XXXXXXX"
    --------------------------------------------------------- */
 window.SITE_CONFIG = {
   FORMBOLD_ENDPOINT: "PASTE_FORMBOLD_ENDPOINT_HERE",
-  REVIEW_COOLDOWN_DAYS: 7,   // one review per browser every N days
-  MIN_SUBMIT_SECONDS: 3      // spam guard: ignore submissions faster than this
+  REVIEW_COOLDOWN_DAYS: 7,
+  MIN_SUBMIT_SECONDS: 3
 };
 window.isEndpointConfigured = () =>
   typeof SITE_CONFIG.FORMBOLD_ENDPOINT === "string" &&
   SITE_CONFIG.FORMBOLD_ENDPOINT.startsWith("http");
 
-/* ---------- tiny helpers ---------- */
+/* ---------- helpers ---------- */
 const $  = (s, c = document) => c.querySelector(s);
 const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -35,7 +35,7 @@ window.toast = (msg) => {
   }, 4000);
 };
 
-/* ---------- ripple on buttons ---------- */
+/* ---------- ripple ---------- */
 document.addEventListener("pointerdown", (e) => {
   const btn = e.target.closest("[data-ripple]");
   if (!btn || prefersReduced) return;
@@ -50,35 +50,84 @@ document.addEventListener("pointerdown", (e) => {
   setTimeout(() => span.remove(), 620);
 });
 
-/* ---------- nav: stuck state ---------- */
+/* ---------- nav stuck + back-to-top ---------- */
 const nav = $("#nav");
 const onScroll = () => {
   nav.classList.toggle("is-stuck", window.scrollY > 12);
   const tt = $("#toTop");
-  if (tt) tt.classList.toggle("show", window.scrollY > 600);
+  if (tt) tt.classList.toggle("show", window.scrollY > 500);
 };
 addEventListener("scroll", onScroll, { passive: true });
 onScroll();
 
-/* ---------- nav: active section highlight ---------- */
+/* =========================================================
+   PAGE ROUTER — each nav target is its own "page"; sections
+   are shown/hidden so there is no continuous full-site scroll.
+   ========================================================= */
+const PAGE_OF = {
+  home: "home", featured: "home",
+  video: "video", graphic: "graphic",
+  services: "services", process: "services",
+  about: "about", reviews: "reviews", contact: "contact"
+};
+const PAGES = ["home", "video", "graphic", "services", "about", "reviews", "contact"];
+const sections = $$("main > section[data-page]");
 const navLinks = $$(".nav__link[href^='#']");
-const linkFor = (id) => navLinks.find((a) => a.getAttribute("href") === "#" + id);
 const portfolioToggle = $(".nav__sub-toggle");
-const secObserver = new IntersectionObserver((entries) => {
-  entries.forEach((en) => {
-    if (!en.isIntersecting) return;
-    const id = en.target.id;
-    navLinks.forEach((a) => a.classList.remove("is-active"));
-    portfolioToggle && portfolioToggle.classList.remove("is-active");
-    if (id === "video" || id === "graphic") {
-      portfolioToggle && portfolioToggle.classList.add("is-active");
-    } else {
-      const l = linkFor(id);
-      if (l) l.classList.add("is-active");
-    }
+const mainEl = $("#main");
+let currentPage = null;
+
+function setActiveNav(page) {
+  navLinks.forEach((a) => a.classList.remove("is-active"));
+  portfolioToggle && portfolioToggle.classList.remove("is-active");
+  if (page === "video" || page === "graphic") {
+    portfolioToggle && portfolioToggle.classList.add("is-active");
+  } else {
+    const l = navLinks.find((a) => PAGE_OF[a.getAttribute("href").slice(1)] === page);
+    if (l) l.classList.add("is-active");
+  }
+}
+
+function showPage(page) {
+  if (!PAGES.includes(page)) page = "home";
+  currentPage = page;
+  sections.forEach((s) => {
+    const on = s.dataset.page === page;
+    s.hidden = !on;
+    if (on && !prefersReduced) { s.classList.remove("page-fade"); void s.offsetWidth; s.classList.add("page-fade"); }
   });
-}, { rootMargin: "-45% 0px -50% 0px" });
-$$("section[id]").forEach((s) => secObserver.observe(s));
+  setActiveNav(page);
+  window.scrollTo(0, 0);
+  window.revealCheck && window.revealCheck();
+}
+
+function navigate(page, push = true) {
+  showPage(page);
+  if (push) { try { history.pushState({ page }, "", "#" + page); } catch (e) {} }
+  if (mainEl) { mainEl.setAttribute("tabindex", "-1"); mainEl.focus({ preventScroll: true }); }
+}
+
+addEventListener("popstate", () => {
+  showPage(PAGE_OF[location.hash.slice(1)] || "home");
+});
+
+// intercept all internal hash links → route or in-page scroll
+document.addEventListener("click", (e) => {
+  const a = e.target.closest('a[href^="#"]');
+  if (!a) return;
+  const href = a.getAttribute("href");
+  if (href === "#") { e.preventDefault(); return; }       // placeholder links
+  const id = href.slice(1);
+  const page = PAGE_OF[id];
+  if (!page) return;                                       // unknown anchor → default
+  e.preventDefault();
+  if (page === currentPage && id !== page) {
+    document.getElementById(id)?.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
+  } else {
+    navigate(page);
+  }
+  if (drawer && drawer.classList.contains("is-open")) setDrawer(false);
+});
 
 /* ---------- desktop submenu (hover + keyboard) ---------- */
 const hasSub = $(".nav__has-sub");
@@ -89,16 +138,13 @@ if (hasSub && portfolioToggle) {
   hasSub.addEventListener("mouseleave", close);
   hasSub.addEventListener("focusin", open);
   hasSub.addEventListener("focusout", (e) => { if (!hasSub.contains(e.relatedTarget)) close(); });
-  portfolioToggle.addEventListener("click", () => {
-    document.querySelector("#video")?.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
-    close();
-  });
+  portfolioToggle.addEventListener("click", () => { navigate("video"); close(); });
 }
 
 /* ---------- mobile drawer ---------- */
 const drawer = $("#mobileMenu");
 const toggle = $("#navToggle");
-const setDrawer = (open) => {
+function setDrawer(open) {
   drawer.classList.toggle("is-open", open);
   drawer.setAttribute("aria-hidden", String(!open));
   toggle.setAttribute("aria-expanded", String(open));
@@ -106,37 +152,10 @@ const setDrawer = (open) => {
   toggle.innerHTML = `<svg class="ico" aria-hidden="true"><use href="#i-${open ? "close" : "menu"}"/></svg>`;
   document.body.style.overflow = open ? "hidden" : "";
   if (open) drawer.querySelector(".drawer__link")?.focus({ preventScroll: true });
-};
-toggle?.addEventListener("click", () => setDrawer(!drawer.classList.contains("is-open")));
-drawer?.addEventListener("click", (e) => {
-  if (e.target === drawer || e.target.closest(".drawer__link, .drawer__cta")) setDrawer(false);
-});
-addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("is-open")) setDrawer(false); });
-
-/* ---------- cursor-following glow ---------- */
-if (!prefersReduced && matchMedia("(pointer:fine)").matches) {
-  const glow = $(".cursor-glow");
-  let tx = innerWidth / 2, ty = innerHeight / 2, cx = tx, cy = ty;
-  addEventListener("pointermove", (e) => { tx = e.clientX; ty = e.clientY; }, { passive: true });
-  (function loop() {
-    cx += (tx - cx) * 0.12; cy += (ty - cy) * 0.12;
-    glow.style.left = cx + "px"; glow.style.top = cy + "px";
-    requestAnimationFrame(loop);
-  })();
-
-  /* hero stage parallax */
-  const stage = $("#home .hero__stage");
-  if (stage) {
-    const hero = $("#home");
-    hero.addEventListener("pointermove", (e) => {
-      const r = hero.getBoundingClientRect();
-      const dx = (e.clientX - r.left - r.width / 2) / r.width;
-      const dy = (e.clientY - r.top - r.height / 2) / r.height;
-      stage.style.transform = `translate3d(${dx * 18}px, ${dy * 18}px, 0)`;
-    });
-    hero.addEventListener("pointerleave", () => (stage.style.transform = ""));
-  }
 }
+toggle?.addEventListener("click", () => setDrawer(!drawer.classList.contains("is-open")));
+drawer?.addEventListener("click", (e) => { if (e.target === drawer) setDrawer(false); });
+addEventListener("keydown", (e) => { if (e.key === "Escape" && drawer.classList.contains("is-open")) setDrawer(false); });
 
 /* ---------- back to top + year ---------- */
 $("#toTop")?.addEventListener("click", () =>
@@ -154,3 +173,6 @@ $$("[data-service]").forEach((btn) => {
     }
   });
 });
+
+/* ---------- initial route ---------- */
+showPage(PAGE_OF[location.hash.slice(1)] || "home");
