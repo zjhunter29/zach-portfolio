@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://example.com/sitemap.xml
+Sitemap: https://zjhunter29.github.io/zach-portfolio/sitemap.xml

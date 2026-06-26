@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Replace https://example.com/ with your real domain (e.g. https://USER.github.io/REPO/) -->
+<!-- Replace https://zjhunter29.github.io/zach-portfolio/ with your real domain (e.g. https://USER.github.io/REPO/) -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://example.com/</loc>
+    <loc>https://zjhunter29.github.io/zach-portfolio/</loc>
     <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
