@@ -13,7 +13,7 @@ No build step. No framework. Just HTML, CSS and vanilla JS.
 - [Quick start](#quick-start)
 - [Deploy to GitHub Pages](#deploy-to-github-pages)
 - [Set up email (Resend)](#set-up-email-resend)
-- [Add new videos](#add-new-videos)
+- [Add a video from Google Drive](#add-a-video-from-google-drive)
 - [Add new images](#add-new-images)
 - [How the gallery automation works](#how-the-gallery-automation-works)
 - [How the review system works](#how-the-review-system-works)
@@ -118,20 +118,37 @@ so you can preview without a backend.
 
 ---
 
-## Add new videos
+## Add a video from Google Drive
 
-1. Drop `.mp4` files into **`/portfolio/videos/`**.
-2. (Optional) Add a matching thumbnail (`.jpg`/`.png`/`.webp`) with the **same base name** into
-   **`/portfolio/videos/thumbs/`**. Without one, a placeholder is used.
-3. Name files using the convention `Category__My-Title.mp4` to auto-fill the category and title, e.g.
-   `Cinematic__Skyline-Brand-Film.mp4` → category **Cinematic**, title **Skyline Brand Film**.
-4. Commit & push. The GitHub Action regenerates `portfolio/videos.json` automatically.
+Best for large files — nothing is uploaded to the repo, you just paste a link.
 
-The **duration is read automatically** from each `.mp4` (a 30-second clip shows `0:30`), and the **title and
-category come from the filename** — so the card on the site always matches the actual file. The category is shown
-as a label on each card (the on-page filter buttons were intentionally removed for a cleaner look).
+1. In **Google Drive**, right-click your video → **Share** → set **General access** to
+   **"Anyone with the link"** → **Copy link**. (This is required, or the video/thumbnail won't load.)
+2. Open **`portfolio/videos.json`** (edit it right on GitHub). Copy the `{ … }` example block and set:
+   ```json
+   {
+     "id": "my-cinematic-reel",
+     "title": "My Cinematic Reel",
+     "category": "Cinematic",
+     "description": "Short description shown on the card.",
+     "drive": "https://drive.google.com/file/d/1AbCdEf…/view?usp=sharing"
+   }
+   ```
+   Paste your copied link into **`drive`**. Add one block per video (comma-separated). Delete the
+   `"Example — replace or delete me"` entry once you've added your own.
+3. Commit. That's it — the card shows a **thumbnail pulled automatically from Drive**, and clicking it opens an
+   **embedded Drive player** in the modal (works for big files). `category` becomes the card label; `title` and
+   `description` show on the card. You can optionally add `"duration": "2:14"` and `"thumbnail": "…"` to override.
 
-To run the generator locally instead of waiting for CI:
+> Any Drive link format works (`…/file/d/ID/view`, `open?id=ID`, or a raw ID). The `drive` entries are **never
+> overwritten** by the gallery automation, so they're safe to keep.
+
+## Add a video as a local file (optional, for small clips)
+
+Prefer to commit a small `.mp4` instead? Drop it into **`/portfolio/videos/`** (optionally a matching thumbnail
+in `/portfolio/videos/thumbs/`), name it `Category__My-Title.mp4`, and push. The GitHub Action rebuilds
+`portfolio/videos.json`: the **duration is read automatically** from the file (a 30-second clip shows `0:30`) and
+the title/category come from the filename. To run the generator locally instead of waiting for CI:
 ```bash
 node scripts/generate-gallery-manifest.js
 ```

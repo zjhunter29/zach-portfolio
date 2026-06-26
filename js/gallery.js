@@ -12,6 +12,7 @@
   /* ---------- embedded fallback (mirrors the JSON manifests) ---------- */
   const FALLBACK = {
     videos: [
+      { id:"example", title:"Example — paste a Drive link", category:"Cinematic", description:"Set this item's drive field to a Google Drive share link (file shared as 'Anyone with the link').", drive:"PASTE_GOOGLE_DRIVE_SHARE_LINK_HERE" },
       { id:"v1", title:"Championship Recap", category:"Sports", description:"High-energy season recap cut to the beat with speed ramps and color-graded highlights.", thumbnail:"portfolio/videos/thumbs/sample-1.svg", src:"", duration:"1:24" },
       { id:"v2", title:"Neon Drive Spot", category:"Commercial", description:"30-second product spot with cinematic lighting and a punchy sound design.", thumbnail:"portfolio/videos/thumbs/sample-2.svg", src:"", duration:"0:30" },
       { id:"v3", title:"Solitude — Short Film", category:"Cinematic", description:"A moody narrative edit with film-grade color and atmospheric pacing.", thumbnail:"portfolio/videos/thumbs/sample-3.svg", src:"", duration:"3:52" },
@@ -51,6 +52,20 @@
 
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;" }[c]));
 
+  /* ---------- Google Drive helpers ----------
+     Accepts any Drive share URL (…/file/d/ID/view, open?id=ID, uc?id=ID) or a raw ID.
+     The file must be shared as "Anyone with the link". */
+  const driveId = (url) => {
+    const s = String(url || "").trim();
+    if (!s || /PASTE/i.test(s)) return "";
+    if (/^[A-Za-z0-9_-]{25,}$/.test(s)) return s;            // raw id
+    const m = s.match(/\/d\/([A-Za-z0-9_-]+)/) || s.match(/[?&]id=([A-Za-z0-9_-]+)/);
+    return m ? m[1] : "";
+  };
+  const drivePreview = (id) => `https://drive.google.com/file/d/${id}/preview`;
+  const driveThumb = (id) => `https://drive.google.com/thumbnail?id=${id}&sz=w1280`;
+  const DEFAULT_VIDEO_THUMB = "assets/placeholders/video-default.svg";
+
   /* ---------- modal / lightbox ---------- */
   const modal = document.getElementById("mediaModal");
   const stage = document.getElementById("modalStage");
@@ -81,9 +96,16 @@
   addEventListener("keydown", (e) => { if (e.key === "Escape" && modal.classList.contains("is-open")) closeModal(); });
 
   const openVideo = (item) => {
-    const html = item.src
-      ? `<video controls autoplay playsinline preload="metadata" poster="${esc(item.thumbnail)}"><source src="${esc(item.src)}" type="video/mp4">Your browser does not support video.</video>`
-      : `<div class="modal__placeholder"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg><p><strong>Preview coming soon.</strong><br>Add <code>${esc(item.title)}.mp4</code> to <code>/portfolio/videos/</code> and its <code>src</code> in <code>videos.json</code>.</p></div>`;
+    const vid = driveId(item.drive);
+    let html;
+    if (vid) {
+      // Google Drive embedded player — works for large files that can't live in the repo.
+      html = `<iframe src="${drivePreview(vid)}" title="${esc(item.title)}" allow="autoplay; fullscreen" allowfullscreen loading="lazy"></iframe>`;
+    } else if (item.src) {
+      html = `<video controls autoplay playsinline preload="metadata" poster="${esc(item.thumbnail || "")}"><source src="${esc(item.src)}" type="video/mp4">Your browser does not support video.</video>`;
+    } else {
+      html = `<div class="modal__placeholder"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg><p><strong>No video linked yet.</strong><br>Paste a Google&nbsp;Drive share link into this item's <code>drive</code> field in <code>portfolio/videos.json</code>.</p></div>`;
+    }
     openModal(html, item);
   };
   const openImage = (item) =>
@@ -98,10 +120,12 @@
 
     const cardHTML = (item, idx) => {
       if (type === "video") {
+        const vid = driveId(item.drive);
+        const thumb = item.thumbnail || (vid ? driveThumb(vid) : DEFAULT_VIDEO_THUMB);
         return `<article class="card card--video" tabindex="0" role="button" aria-label="Play ${esc(item.title)}" data-id="${esc(item.id)}" style="--i:${idx % pageSize}">
           <div class="card__media">
             ${item.duration ? `<span class="card__dur">${esc(item.duration)}</span>` : ""}
-            <img src="${esc(item.thumbnail)}" alt="${esc(item.title)} — ${esc(item.category)} video thumbnail" loading="lazy" decoding="async">
+            <img src="${esc(thumb)}" onerror="this.onerror=null;this.src='${DEFAULT_VIDEO_THUMB}'" alt="${esc(item.title)} — ${esc(item.category)} video thumbnail" loading="lazy" decoding="async">
             <div class="card__overlay" aria-hidden="true"></div>
             <span class="card__play" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
             <div class="card__info">

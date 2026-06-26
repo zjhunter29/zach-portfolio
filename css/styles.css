@@ -407,6 +407,7 @@ body:hover .cursor-glow { opacity: 1; }
 .modal__close:hover { background: rgba(var(--glow), .4); transform: rotate(90deg); }
 .modal__stage { border-radius: var(--r-md); overflow: hidden; background: #000; }
 .modal__stage img, .modal__stage video { width: 100%; height: auto; max-height: 70vh; object-fit: contain; display: block; }
+.modal__stage iframe { width: 100%; aspect-ratio: 16 / 9; max-height: 80vh; border: 0; display: block; background: #000; }
 .modal__placeholder { aspect-ratio: 16/9; display: grid; place-items: center; text-align: center; gap: .6rem; color: var(--text-muted); padding: 2rem; background: var(--surface-2); }
 .modal__placeholder .ico { width: 2.4rem; height: 2.4rem; color: var(--blue); }
 .modal__meta { padding: 1.1rem .6rem .5rem; }
