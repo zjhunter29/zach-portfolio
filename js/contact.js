@@ -13,7 +13,14 @@
   const fileInput = document.getElementById("c-file");
   const fileLabel = document.getElementById("fileLabel");
   const drop = form.querySelector(".filedrop");
-  const MAX_FILE = 10 * 1024 * 1024; // 10MB
+  const MAX_FILE = 10 * 1024 * 1024; // 10MB (UI cap)
+  const MAX_EMAIL_ATTACH = 3 * 1024 * 1024; // emailed attachments capped (serverless body limit)
+  const toBase64 = (file) => new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onload = () => resolve(String(r.result).split(",")[1] || "");
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
   const loadTime = Date.now();
 
   /* ---------- validation helpers ---------- */
@@ -97,18 +104,30 @@
     submitBtn.classList.add("is-loading");
     submitBtn.disabled = true;
     try {
-      const fd = new FormData(form);
-      fd.delete("website"); // strip honeypot
-      fd.append("formType", "contact");
-      fd.append("_subject", `New project enquiry: ${form.subject.value}`);
-      if (!fileInput.files.length) fd.delete("attachment");
+      const payload = {
+        formType: "contact",
+        name: form.name.value.trim(),
+        email: form.email.value.trim(),
+        service: form.service.value,
+        budget: form.budget.value,
+        subject: form.subject.value.trim(),
+        message: form.message.value.trim(),
+        website: form.website.value // honeypot (server drops if filled)
+      };
+      const file = fileInput.files[0];
+      if (file && file.size <= MAX_EMAIL_ATTACH) {
+        payload.attachment = { filename: file.name, content: await toBase64(file) };
+      } else if (file) {
+        payload.message += `\n\n(Note: attachment "${file.name}" was too large to email — I'll share it another way.)`;
+      }
 
-      if (window.isEndpointConfigured()) {
-        const res = await fetch(CFG.FORMBOLD_ENDPOINT, { method:"POST", body: fd, headers:{ Accept:"application/json" } });
-        if (!res.ok) throw new Error("Submission failed");
+      if (window.isLocalPreview()) {
+        await new Promise((r) => setTimeout(r, 700)); // no backend locally → demo
       } else {
-        await new Promise((r) => setTimeout(r, 800)); // demo mode
-        console.warn("[contact] Formbold endpoint not set — running in demo mode. Add it in js/app.js.");
+        const res = await fetch(CFG.EMAIL_ENDPOINT, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("send failed");
       }
 
       form.reset();

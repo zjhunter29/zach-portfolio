@@ -2,7 +2,7 @@
 
 A custom-built, single-page **liquid-glass** portfolio for a video editor / graphic designer / UX designer.
 Dark cinematic aesthetic, glassmorphism UI, smooth scroll-reveal animations, a self-updating media gallery,
-and fully-functional contact + review forms powered by [Formbold](https://formbold.com).
+and fully-functional contact + review forms powered by [Resend](https://resend.com).
 
 No build step. No framework. Just HTML, CSS and vanilla JS.
 
@@ -12,7 +12,7 @@ No build step. No framework. Just HTML, CSS and vanilla JS.
 
 - [Quick start](#quick-start)
 - [Deploy to GitHub Pages](#deploy-to-github-pages)
-- [Configure the Formbold endpoint](#configure-the-formbold-endpoint)
+- [Set up email (Resend)](#set-up-email-resend)
 - [Add new videos](#add-new-videos)
 - [Add new images](#add-new-images)
 - [How the gallery automation works](#how-the-gallery-automation-works)
@@ -67,26 +67,54 @@ Then visit `http://localhost:8000` (or the port shown).
 
 ---
 
-## Configure the Formbold endpoint
+## Set up email (Resend)
 
-Both the **contact** form and the **review** form post to one Formbold endpoint.
+Both the **contact** and **review** forms send email through [Resend](https://resend.com) via a small
+serverless function (`api/send.js`). The forms POST JSON to it; it sends the email.
 
-1. Create a free form at [formbold.com](https://formbold.com) and copy its endpoint
-   (looks like `https://formbold.com/s/XXXXXXX`).
-2. Open **`js/app.js`** and edit the single config line near the top:
+> **Why a function?** A Resend API key is a **secret**. If it lived in the website's JavaScript, anyone could
+> view-source, copy it, and send email as you (and Resend blocks browser-side calls anyway). So the key lives
+> on the server as an environment variable — never in the site code. That's the secure "paste the key when
+> ready" step.
 
-   ```js
-   window.SITE_CONFIG = {
-     FORMBOLD_ENDPOINT: "https://formbold.com/s/XXXXXXX",  // ← paste yours here
-     REVIEW_COOLDOWN_DAYS: 7,
-     MIN_SUBMIT_SECONDS: 3
-   };
-   ```
+### Recommended: host the whole site on Vercel (static site + function together)
 
-That's it — no other code changes are needed. Submissions arrive in your Formbold inbox/email.
-Each payload includes a `formType` field (`"contact"` or `"review"`) so you can tell them apart, plus a
-`_subject` line. Until you paste a real endpoint, both forms run in **demo mode** (they validate and show the
-success state but don't send anything — check the browser console for a notice).
+1. Create a free [Resend](https://resend.com) account. For real sending, **add and verify your domain**
+   (Resend → Domains). For a quick test you can skip this and use the default `onboarding@resend.dev` sender,
+   which only delivers to your own Resend account email.
+2. Resend → **API Keys** → create one (looks like `re_xxxxxxxx`). Copy it.
+3. Import this GitHub repo into [Vercel](https://vercel.com) ("New Project"). No build settings needed — it
+   serves the static files and the `api/send` function automatically.
+4. In Vercel → **Project → Settings → Environment Variables**, add (this is where you paste the key):
+
+   | Name | Value |
+   |------|-------|
+   | `RESEND_API_KEY` | your `re_…` key |
+   | `CONTACT_TO_EMAIL` | the inbox that should receive form emails |
+   | `RESEND_FROM` | *(optional)* verified sender, e.g. `Zach <forms@yourdomain.com>` |
+   | `ALLOW_ORIGIN` | *(optional, recommended)* your site origin, e.g. `https://your-app.vercel.app` |
+
+5. Deploy. Leave `EMAIL_ENDPOINT` in `js/app.js` as `"/api/send"`. Done — both forms now send real email.
+
+### Alternative: keep the site on GitHub Pages, run only the function on Vercel
+
+Deploy this repo to Vercel as above (for the function), then in **`js/app.js`** set the endpoint to the full
+function URL and lock CORS to your Pages origin via the `ALLOW_ORIGIN` env var:
+
+```js
+window.SITE_CONFIG = {
+  EMAIL_ENDPOINT: "https://your-app.vercel.app/api/send",  // ← your Vercel function URL
+  REVIEW_COOLDOWN_DAYS: 7,
+  MIN_SUBMIT_SECONDS: 3
+};
+```
+
+Each email's payload includes a `formType` field (`"contact"` or `"review"`) so the function formats them
+differently. On `localhost`/`file://` the forms run in **demo mode** (validate + show success, send nothing),
+so you can preview without a backend.
+
+> Prefer Netlify or Cloudflare? The function is plain Node with no dependencies — it ports easily; ask and it
+> can be adapted to a Netlify/Cloudflare function.
 
 ---
 
@@ -138,7 +166,7 @@ Use `Category__My-Title.png` (e.g. `Branding__Aurora-Identity.png`). Commit & pu
 ## How the review system works
 
 - Visitors submit a review (name, email, 1–5 star rating, text) in the **Leave a review** form.
-- It posts to the **same Formbold endpoint** as the contact form, with a hidden `formType=review` field, so
+- It posts to the **same `/api/send` function** as the contact form, with a `formType: "review"` field, so
   reviews are **emailed privately to you and are never auto-published** on the site.
 - **One review per browser every 7 days** is enforced with `localStorage` (`REVIEW_COOLDOWN_DAYS` in
   `js/app.js`). After submitting, the form shows the date the visitor can post again.
@@ -218,12 +246,13 @@ attribute on each `<section>`. Process lives on the Services page; Featured live
 .
 ├── index.html
 ├── css/styles.css
+├── api/send.js         # Resend email function (contact + review) — serverless
 ├── js/
-│   ├── app.js          # config (Formbold endpoint), nav, cursor glow, ripple, drawer
-│   ├── animations.js   # scroll reveals, counters, particle field
-│   ├── gallery.js      # manifest loading, filtering, modal/lightbox
+│   ├── app.js          # config (email endpoint), page router, nav, ripple, drawer
+│   ├── animations.js   # scroll reveals + counters
+│   ├── gallery.js      # manifest loading, modal video + lightbox
 │   ├── reviews.js      # testimonials + review form (7-day localStorage gate)
-│   └── contact.js      # contact form (validation, honeypot, file upload, Formbold)
+│   └── contact.js      # contact form (validation, honeypot, file upload, Resend)
 ├── portfolio/
 │   ├── images/         # ← drop PNG/JPG/JPEG/WEBP here
 │   ├── videos/         # ← drop MP4 here  (+ videos/thumbs/ for thumbnails)
@@ -252,4 +281,4 @@ attribute on each `<section>`. Process lives on the Services page; Featured live
 
 ---
 
-Built with care. Swap in your work, paste your Formbold endpoint, and ship. 🚀
+Built with care. Swap in your work, add your Resend key on the server, and ship. 🚀

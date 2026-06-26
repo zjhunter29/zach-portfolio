@@ -3,19 +3,26 @@
    ========================================================= */
 
 /* ---------------------------------------------------------
-   CONFIG  ·  EDIT THIS ONE LINE
-   Paste your Formbold form endpoint between the quotes.
-   Shared by BOTH the contact form and the review form.
-   e.g. "https://formbold.com/s/XXXXXXX"
+   CONFIG
+   Emails are sent through Resend via the serverless function at
+   /api/send (see api/send.js). Your secret Resend API key is NOT
+   set here — it lives in a server environment variable. You only
+   need to touch EMAIL_ENDPOINT if the function runs on a different
+   origin than the site:
+     • Whole site on Vercel        →  keep "/api/send"
+     • Site on GitHub Pages, API   →  set the full Vercel URL, e.g.
+       on Vercel separately           "https://your-app.vercel.app/api/send"
    --------------------------------------------------------- */
 window.SITE_CONFIG = {
-  FORMBOLD_ENDPOINT: "PASTE_FORMBOLD_ENDPOINT_HERE",
+  EMAIL_ENDPOINT: "/api/send",
   REVIEW_COOLDOWN_DAYS: 7,
   MIN_SUBMIT_SECONDS: 3
 };
 window.isEndpointConfigured = () =>
-  typeof SITE_CONFIG.FORMBOLD_ENDPOINT === "string" &&
-  SITE_CONFIG.FORMBOLD_ENDPOINT.startsWith("http");
+  typeof SITE_CONFIG.EMAIL_ENDPOINT === "string" && SITE_CONFIG.EMAIL_ENDPOINT.length > 0;
+// Local file:// or localhost has no backend → forms run in demo mode (no real send).
+window.isLocalPreview = () =>
+  location.protocol === "file:" || ["localhost", "127.0.0.1", ""].includes(location.hostname);
 
 /* ---------- helpers ---------- */
 const $  = (s, c = document) => c.querySelector(s);

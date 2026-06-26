@@ -127,20 +127,20 @@
 
     submitBtn.classList.add("is-loading");
     try {
-      const fd = new FormData();
-      fd.append("formType", "review");
-      fd.append("name", name);
-      fd.append("email", email);
-      fd.append("rating", `${rating} / 5`);
-      fd.append("review", review);
-      fd.append("_subject", `New ${rating}★ review from ${name}`);
-
-      if (window.isEndpointConfigured()) {
-        const res = await fetch(CFG.FORMBOLD_ENDPOINT, { method:"POST", body: fd, headers:{ Accept:"application/json" } });
-        if (!res.ok) throw new Error("Submission failed");
+      const payload = {
+        formType: "review",
+        name, email,
+        rating: `${rating} / 5`,
+        review,
+        company: form.company.value // honeypot (server drops if filled)
+      };
+      if (window.isLocalPreview()) {
+        await new Promise((r) => setTimeout(r, 600)); // no backend locally → demo
       } else {
-        await new Promise((r) => setTimeout(r, 700)); // demo mode
-        console.warn("[reviews] Formbold endpoint not set — running in demo mode. Add it in js/app.js.");
+        const res = await fetch(CFG.EMAIL_ENDPOINT, {
+          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error("send failed");
       }
 
       localStorage.setItem(STORAGE_KEY, String(Date.now()));
