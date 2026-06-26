@@ -284,8 +284,8 @@ body:hover .cursor-glow { opacity: 1; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 7px rgba(var(--glow), 0); } }
 
 .hero__title { margin-top: 1.4rem; display: grid; gap: .2rem; }
-.hero__title > span:first-child { font-family: "Playfair Display", Georgia, serif; font-style: italic; font-size: clamp(4rem, 14vw, 9.5rem); font-weight: 800; line-height: 1; letter-spacing: 0;
-  background: linear-gradient(180deg, #ffffff, #cdd6ea); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-bottom: .08em; }
+.hero__title > span:first-child { font-size: clamp(3.6rem, 13vw, 8.5rem); font-weight: 800; line-height: .92; letter-spacing: -.04em;
+  background: linear-gradient(180deg, #ffffff, #b9bdd6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .hero__title-grad { font-size: clamp(1.8rem, 6.4vw, 4.2rem); font-weight: 800; line-height: 1; }
 .hero__lead { margin-top: 1.6rem; max-width: 48ch; color: var(--text-muted); font-size: clamp(1rem, 1.4vw, 1.15rem); }
 .hero__cta { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: .85rem; }
