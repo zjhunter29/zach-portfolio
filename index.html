@@ -36,7 +36,7 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Sora:wght@400;600;700;800&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,800;1,700;1,800&family=Sora:wght@400;600;700;800&display=swap" />
 
   <link rel="stylesheet" href="css/styles.css" />
 
@@ -177,21 +177,24 @@
     <!-- ============ HERO ============ -->
     <section class="hero section" id="home" data-page="home">
       <div class="container hero__grid">
+        <div class="hero__portrait reveal" data-reveal data-reveal-delay="1">
+          <img src="assets/placeholders/portrait.jpg" onerror="this.onerror=null;this.src='assets/placeholders/portrait.svg'" alt="Zach — portrait" width="540" height="675" fetchpriority="high" decoding="async"/>
+        </div>
         <div class="hero__copy">
           <h1 class="hero__title">
-            <span class="reveal" data-reveal data-reveal-delay="1">Zach</span>
-            <span class="hero__title-grad gradient-text reveal" data-reveal data-reveal-delay="2">Bringing Ideas<br/>to Life</span>
+            <span class="reveal" data-reveal data-reveal-delay="2">Zach</span>
           </h1>
-          <p class="hero__lead reveal" data-reveal data-reveal-delay="3">
+          <p class="hero__tagline reveal" data-reveal data-reveal-delay="3">Bringing ideas to life.</p>
+          <p class="hero__lead reveal" data-reveal data-reveal-delay="4">
             I'm an independent video editor, UX designer and graphic designer crafting clean,
             professional, scroll-stopping content that captures attention and delivers results.
           </p>
-          <div class="hero__cta reveal" data-reveal data-reveal-delay="4">
+          <div class="hero__cta reveal" data-reveal data-reveal-delay="5">
             <a class="btn btn--primary" href="#video" data-ripple>View My Work <svg class="ico" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
             <a class="btn btn--ghost" href="#services" data-ripple>Explore Services <svg class="ico" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
           </div>
 
-          <div class="hero__tools reveal" data-reveal data-reveal-delay="5" aria-label="Tools I use">
+          <div class="hero__tools reveal" data-reveal data-reveal-delay="6" aria-label="Tools I use">
             <figure class="tool"><img src="assets/logos/premiere.png" alt="Adobe Premiere Pro" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Premiere&nbsp;Pro</figcaption></figure>
             <figure class="tool"><img src="assets/logos/photoshop.png" alt="Adobe Photoshop" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Photoshop</figcaption></figure>
             <figure class="tool"><img src="assets/logos/lightroom.png" alt="Adobe Lightroom" width="44" height="44" loading="lazy" decoding="async"/><figcaption>Lightroom</figcaption></figure>
