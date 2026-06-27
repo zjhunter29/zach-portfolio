@@ -127,18 +127,16 @@ Best for large files — nothing is uploaded to the repo, you just paste a link.
 2. Open **`portfolio/videos.json`** (edit it right on GitHub). Copy the `{ … }` example block and set:
    ```json
    {
-     "id": "my-cinematic-reel",
      "title": "My Cinematic Reel",
-     "category": "Cinematic",
      "description": "Short description shown on the card.",
      "drive": "https://drive.google.com/file/d/1AbCdEf…/view?usp=sharing"
    }
    ```
    Paste your copied link into **`drive`**. Add one block per video (comma-separated). Delete the
-   `"Example — replace or delete me"` entry once you've added your own.
+   `"Example — replace or delete me"` entry once you've added your own. (No `id` or `category` needed.)
 3. Commit. That's it — the card shows a **thumbnail pulled automatically from Drive**, and clicking it opens an
-   **embedded Drive player** in the modal (works for big files). `category` becomes the card label; `title` and
-   `description` show on the card. You can optionally add `"duration": "2:14"` and `"thumbnail": "…"` to override.
+   **embedded Drive player** in the modal (works for big files). The `title` and `description` show on the card.
+   You can optionally add `"duration": "2:14"` and `"thumbnail": "…"` to override.
 
 > Any Drive link format works (`…/file/d/ID/view`, `open?id=ID`, or a raw ID). The `drive` entries are **never
 > overwritten** by the gallery automation, so they're safe to keep.
@@ -146,9 +144,9 @@ Best for large files — nothing is uploaded to the repo, you just paste a link.
 ## Add a video as a local file (optional, for small clips)
 
 Prefer to commit a small `.mp4` instead? Drop it into **`/portfolio/videos/`** (optionally a matching thumbnail
-in `/portfolio/videos/thumbs/`), name it `Category__My-Title.mp4`, and push. The GitHub Action rebuilds
-`portfolio/videos.json`: the **duration is read automatically** from the file (a 30-second clip shows `0:30`) and
-the title/category come from the filename. To run the generator locally instead of waiting for CI:
+in `/portfolio/videos/thumbs/`), name it after the title (e.g. `My-Title.mp4`), and push. The GitHub Action
+rebuilds `portfolio/videos.json`: the **duration is read automatically** from the file (a 30-second clip shows
+`0:30`) and the title comes from the filename. To run the generator locally instead of waiting for CI:
 ```bash
 node scripts/generate-gallery-manifest.js
 ```
@@ -156,18 +154,18 @@ node scripts/generate-gallery-manifest.js
 ## Add new images
 
 Same flow, into **`/portfolio/images/`**. Supported: **PNG, JPG, JPEG, WEBP**.
-Use `Category__My-Title.png` (e.g. `Branding__Aurora-Identity.png`). Commit & push and the Action rebuilds
-`portfolio/images.json`. The category appears as a label on each design card.
+Name it after the title (e.g. `Aurora-Identity.png`). Commit & push and the Action rebuilds
+`portfolio/images.json`.
 
 ---
 
 ## How the gallery automation works
 
 - The site renders **exclusively** from `portfolio/videos.json` and `portfolio/images.json`
-  (see `js/gallery.js`). Each item's category is shown as a label on its card.
+  (see `js/gallery.js`). Cards show the `title` (and description for videos) — there are no categories.
 - **`scripts/generate-gallery-manifest.js`** scans the media folders and rebuilds the manifests:
-  - Title/category come from the filename (`Category__Title.ext`); **video duration is parsed from the `.mp4`**.
-  - **Existing `title`, `category` and `description` values are preserved** on regeneration, so manual edits to
+  - The title comes from the filename; **video duration is parsed from the `.mp4`**.
+  - **Existing `title` and `description` values are preserved** on regeneration, so manual edits to
     the JSON are never overwritten (duration is always refreshed from the file).
   - If a media folder is **empty**, its manifest is **left untouched** — that's why the curated placeholder
     items keep showing until you add real media.

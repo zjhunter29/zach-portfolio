@@ -69,14 +69,12 @@
   /* ---------- modal / lightbox ---------- */
   const modal = document.getElementById("mediaModal");
   const stage = document.getElementById("modalStage");
-  const mCat = document.getElementById("modalCat");
   const mTitle = document.getElementById("modalTitle");
   const mDesc = document.getElementById("modalDesc");
   let lastFocused = null;
 
   function openModal(html, item) {
     stage.innerHTML = html;
-    mCat.textContent = item.category || "";
     mTitle.textContent = item.title || "";
     mDesc.textContent = item.description || "";
     lastFocused = document.activeElement;
@@ -116,31 +114,31 @@
     const grid = document.getElementById(gridId);
     const loadBtn = document.getElementById(loadMoreId);
     if (!grid) return;
+    // Drop unfilled template slots (e.g. copied example blocks left as "TITLE").
+    items = (items || []).filter((it) => it && it.title && !/^\s*title\s*$/i.test(it.title));
     let shown = pageSize;
 
     const cardHTML = (item, idx) => {
       if (type === "video") {
         const vid = driveId(item.drive);
         const thumb = item.thumbnail || (vid ? driveThumb(vid) : DEFAULT_VIDEO_THUMB);
-        return `<article class="card card--video" tabindex="0" role="button" aria-label="Play ${esc(item.title)}" data-id="${esc(item.id)}" style="--i:${idx % pageSize}">
+        return `<article class="card card--video" tabindex="0" role="button" aria-label="Play ${esc(item.title)}" data-index="${idx}" style="--i:${idx % pageSize}">
           <div class="card__media">
             ${item.duration ? `<span class="card__dur">${esc(item.duration)}</span>` : ""}
-            <img src="${esc(thumb)}" onerror="this.onerror=null;this.src='${DEFAULT_VIDEO_THUMB}'" alt="${esc(item.title)} — ${esc(item.category)} video thumbnail" loading="lazy" decoding="async">
+            <img src="${esc(thumb)}" onerror="this.onerror=null;this.src='${DEFAULT_VIDEO_THUMB}'" alt="${esc(item.title)}" loading="lazy" decoding="async">
             <div class="card__overlay" aria-hidden="true"></div>
             <span class="card__play" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
             <div class="card__info">
-              <span class="card__cat">${esc(item.category)}</span>
               <h3 class="card__title">${esc(item.title)}</h3>
               <p class="card__desc">${esc(item.description)}</p>
             </div>
           </div></article>`;
       }
-      return `<article class="card card--image" tabindex="0" role="button" aria-label="View ${esc(item.title)}" data-id="${esc(item.id)}" style="--i:${idx % pageSize}">
+      return `<article class="card card--image" tabindex="0" role="button" aria-label="View ${esc(item.title)}" data-index="${idx}" style="--i:${idx % pageSize}">
         <div class="card__media">
-          <img src="${esc(item.src)}" alt="${esc(item.title)} — ${esc(item.category)} design" loading="lazy" decoding="async">
+          <img src="${esc(item.src)}" alt="${esc(item.title)}" loading="lazy" decoding="async">
           <div class="card__overlay" aria-hidden="true"></div>
           <div class="card__info">
-            <span class="card__cat">${esc(item.category)}</span>
             <h3 class="card__title">${esc(item.title)}</h3>
           </div>
         </div></article>`;
@@ -154,7 +152,7 @@
     }
 
     const open = (card) => {
-      const item = items.find((i) => i.id === card.dataset.id);
+      const item = items[Number(card.dataset.index)];
       if (!item) return;
       type === "video" ? openVideo(item) : openImage(item);
     };
