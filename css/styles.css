@@ -71,7 +71,7 @@ html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 html:focus-within { scroll-padding-top: 92px; }
 body {
   font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  background: radial-gradient(120% 120% at 82% 2%, rgba(46,52,74,.30), transparent 52%), linear-gradient(135deg, #070709 0%, #14151b 100%);
+  background: linear-gradient(125deg, #050505 0%, #161616 52%, #2b2b2b 100%);
   background-attachment: fixed;
   color: var(--text);
   line-height: 1.65;
