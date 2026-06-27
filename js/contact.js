@@ -133,7 +133,7 @@
       form.reset();
       showFile(null);
       statusEl.className = "form-status is-ok";
-      statusEl.textContent = "Message sent! I'll get back to you within 24 hours.";
+      statusEl.textContent = "Message sent! I'll get back to you as soon as I can!";
       window.toast && window.toast("Message sent successfully!");
     } catch (err) {
       statusEl.className = "form-status is-err";
