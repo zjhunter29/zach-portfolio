@@ -199,7 +199,7 @@ The testimonials in the scrolling marquee are **placeholder content** defined in
 
 Pricing cards are plain HTML in `index.html` (search for `class="pricing"`). For each `.price-card`, edit:
 - `<h3>` — service name, `.price-card__sub` — the small subtitle
-- `.price-card__price` — the number (`<span class="cur">$</span>149<span class="dec">.99</span>`)
+- `.price-card__price` — the number (`<span class="cur">$</span>249<span class="dec">.99</span>`)
 - the `.price-card__list` `<li>` items — features
 - `data-service="…"` on the CTA — this value pre-selects the matching option in the contact form
 
