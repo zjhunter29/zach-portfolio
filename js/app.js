@@ -10,7 +10,7 @@
    e.g. "https://formbold.com/s/XXXXXXX"
    --------------------------------------------------------- */
 window.SITE_CONFIG = {
-  FORMBOLD_ENDPOINT: "FORMBOLD_LINK_HERE",
+  FORMBOLD_ENDPOINT: "https://formbold.com/s/35YV8",
   REVIEW_COOLDOWN_DAYS: 7,   // one review per browser every N days
   MIN_SUBMIT_SECONDS: 3      // spam guard: ignore submissions faster than this
 };
