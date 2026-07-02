@@ -140,7 +140,11 @@
         const res = await fetch(CFG.EMAIL_ENDPOINT, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error("send failed");
+        if (!res.ok) {
+          if (res.status === 404) throw new Error("The email service isn't deployed yet (endpoint not found). Site owner: deploy api/send.js to Vercel — see README.");
+          const data = await res.json().catch(() => null);
+          throw new Error((data && data.error) || `Send failed (HTTP ${res.status}).`);
+        }
       }
 
       localStorage.setItem(STORAGE_KEY, String(Date.now()));
@@ -151,7 +155,9 @@
       submitBtn.disabled = true;
     } catch (err) {
       statusEl.className = "form-status is-err";
-      statusEl.textContent = "Something went wrong. Please try again or email me directly.";
+      statusEl.textContent = (err && err.message && !/failed to fetch/i.test(err.message))
+        ? err.message
+        : "Something went wrong — network error. Please try again in a moment.";
     } finally {
       submitBtn.classList.remove("is-loading");
     }

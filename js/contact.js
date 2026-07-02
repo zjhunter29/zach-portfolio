@@ -127,7 +127,12 @@
         const res = await fetch(CFG.EMAIL_ENDPOINT, {
           method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
         });
-        if (!res.ok) throw new Error("send failed");
+        if (!res.ok) {
+          // surface the real reason so setup problems are self-explanatory
+          if (res.status === 404) throw new Error("The email service isn't deployed yet (endpoint not found). Site owner: deploy api/send.js to Vercel — see README.");
+          const data = await res.json().catch(() => null);
+          throw new Error((data && data.error) || `Send failed (HTTP ${res.status}).`);
+        }
       }
 
       form.reset();
@@ -137,7 +142,9 @@
       window.toast && window.toast("Message sent successfully!");
     } catch (err) {
       statusEl.className = "form-status is-err";
-      statusEl.textContent = "Couldn't send right now. Please try again in a moment.";
+      statusEl.textContent = (err && err.message && !/failed to fetch/i.test(err.message))
+        ? err.message
+        : "Couldn't send right now — network error. Please try again in a moment.";
     } finally {
       submitBtn.classList.remove("is-loading");
       submitBtn.disabled = false;
