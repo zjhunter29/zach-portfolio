@@ -127,24 +127,22 @@
 
     submitBtn.classList.add("is-loading");
     try {
-      const payload = {
-        formType: "review",
-        name, email,
-        rating: `${rating} / 5`,
-        review,
-        company: form.company.value // honeypot (server drops if filled)
-      };
-      if (window.isLocalPreview()) {
-        await new Promise((r) => setTimeout(r, 600)); // no backend locally → demo
-      } else {
-        const res = await fetch(CFG.EMAIL_ENDPOINT, {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+      const fd = new FormData();
+      fd.append("formType", "review"); // hidden marker so review emails are distinguishable
+      fd.append("name", name);
+      fd.append("email", email);
+      fd.append("rating", `${rating} / 5`);
+      fd.append("review", review);
+      fd.append("_subject", `New ${rating}-star review from ${name}`);
+
+      if (window.isEndpointConfigured()) {
+        const res = await fetch(CFG.FORMBOLD_ENDPOINT, {
+          method: "POST", body: fd, headers: { Accept: "application/json" }
         });
-        if (!res.ok) {
-          if (res.status === 404) throw new Error("The email service isn't deployed yet (endpoint not found). Site owner: deploy api/send.js to Vercel — see README.");
-          const data = await res.json().catch(() => null);
-          throw new Error((data && data.error) || `Send failed (HTTP ${res.status}).`);
-        }
+        if (!res.ok) throw new Error(`Send failed (HTTP ${res.status}). Site owner: check the Formbold endpoint in js/app.js.`);
+      } else {
+        await new Promise((r) => setTimeout(r, 600)); // demo mode
+        console.warn("[reviews] Formbold endpoint not set — demo mode. Replace FORMBOLD_LINK_HERE in js/app.js.");
       }
 
       localStorage.setItem(STORAGE_KEY, String(Date.now()));

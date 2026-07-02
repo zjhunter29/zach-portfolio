@@ -13,14 +13,7 @@
   const fileInput = document.getElementById("c-file");
   const fileLabel = document.getElementById("fileLabel");
   const drop = form.querySelector(".filedrop");
-  const MAX_FILE = 10 * 1024 * 1024; // 10MB (UI cap)
-  const MAX_EMAIL_ATTACH = 3 * 1024 * 1024; // emailed attachments capped (serverless body limit)
-  const toBase64 = (file) => new Promise((resolve, reject) => {
-    const r = new FileReader();
-    r.onload = () => resolve(String(r.result).split(",")[1] || "");
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
+  const MAX_FILE = 10 * 1024 * 1024; // 10MB
   const loadTime = Date.now();
 
   /* ---------- validation helpers ---------- */
@@ -104,35 +97,20 @@
     submitBtn.classList.add("is-loading");
     submitBtn.disabled = true;
     try {
-      const payload = {
-        formType: "contact",
-        name: form.name.value.trim(),
-        email: form.email.value.trim(),
-        service: form.service.value,
-        budget: form.budget ? form.budget.value : "",
-        subject: form.subject.value.trim(),
-        message: form.message.value.trim(),
-        website: form.website.value // honeypot (server drops if filled)
-      };
-      const file = fileInput.files[0];
-      if (file && file.size <= MAX_EMAIL_ATTACH) {
-        payload.attachment = { filename: file.name, content: await toBase64(file) };
-      } else if (file) {
-        payload.message += `\n\n(Note: attachment "${file.name}" was too large to email — I'll share it another way.)`;
-      }
+      const fd = new FormData(form);
+      fd.delete("website"); // strip honeypot from the submission
+      fd.append("formType", "contact");
+      fd.append("_subject", `New project enquiry: ${form.subject.value.trim()}`);
+      if (!fileInput.files.length) fd.delete("attachment");
 
-      if (window.isLocalPreview()) {
-        await new Promise((r) => setTimeout(r, 700)); // no backend locally → demo
-      } else {
-        const res = await fetch(CFG.EMAIL_ENDPOINT, {
-          method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload)
+      if (window.isEndpointConfigured()) {
+        const res = await fetch(CFG.FORMBOLD_ENDPOINT, {
+          method: "POST", body: fd, headers: { Accept: "application/json" }
         });
-        if (!res.ok) {
-          // surface the real reason so setup problems are self-explanatory
-          if (res.status === 404) throw new Error("The email service isn't deployed yet (endpoint not found). Site owner: deploy api/send.js to Vercel — see README.");
-          const data = await res.json().catch(() => null);
-          throw new Error((data && data.error) || `Send failed (HTTP ${res.status}).`);
-        }
+        if (!res.ok) throw new Error(`Send failed (HTTP ${res.status}). Site owner: check the Formbold endpoint in js/app.js.`);
+      } else {
+        await new Promise((r) => setTimeout(r, 700)); // demo mode
+        console.warn("[contact] Formbold endpoint not set — demo mode. Replace FORMBOLD_LINK_HERE in js/app.js.");
       }
 
       form.reset();
