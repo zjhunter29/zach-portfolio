@@ -66,9 +66,10 @@
         "priceRange": "$$",
         "description": "Independent video editing, graphic design and UX design services.",
         "makesOffer": [
-          { "@type": "Offer", "name": "Short-Form Video Editing (0–1 min)", "price": "149.99", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Long-Form Video Editing (1–5 min)", "price": "649.99", "priceCurrency": "USD" },
-          { "@type": "Offer", "name": "Graphic Design", "price": "124.99", "priceCurrency": "USD" }
+          { "@type": "Offer", "name": "Video Editing — 0–1 Minute (Individuals)", "price": "149.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Video Editing — 1–5 Minute (Individuals)", "price": "499.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Graphic Design (Individuals)", "price": "124.99", "priceCurrency": "USD" },
+          { "@type": "Offer", "name": "Video Editing & Graphic Design (Businesses & Companies)", "priceSpecification": { "@type": "UnitPriceSpecification", "price": "40.00", "priceCurrency": "USD", "unitText": "hour" } }
         ]
       },
       {
@@ -283,23 +284,26 @@
         <header class="sec-head">
           <span class="eyebrow" data-reveal>Services &amp; Pricing</span>
           <h2 class="sec-title" data-reveal>Simple, <span class="gradient-text">transparent</span> pricing</h2>
-          <p class="sec-desc" data-reveal>Pick a package below. Every project includes clear communication, source-quality exports and on-time delivery.</p>
+          <p class="sec-desc" data-reveal>Flat-rate packages for individuals, hourly billing for businesses &amp; companies. Every project includes clear communication, source-quality exports and on-time delivery.</p>
         </header>
 
+        <h3 class="pricing-cat" data-reveal>For Individuals</h3>
         <div class="pricing">
           <article class="price-card glass" data-reveal style="--i:0">
             <div class="price-card__glow" aria-hidden="true"></div>
             <header class="price-card__head">
               <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-bolt"/></svg></span>
-              <h3>Short-Form Video</h3>
-              <p class="price-card__sub">0–1 minute</p>
+              <h3>Video Editing</h3>
+              <p class="price-card__sub">0–1 minute video</p>
             </header>
             <div class="price-card__price"><span class="cur">$</span>149<span class="dec">.99</span></div>
             <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Fixed flat-rate price</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 1–2 day delivery</li>            </ul>
-            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Short-Form Video Editing (0–1 min)" data-ripple>Get Started</a>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $10.00 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 1–2 day delivery</li>
+            </ul>
+            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Video Editing — 0–1 Minute ($149.99)" data-ripple>Get Started</a>
           </article>
 
           <article class="price-card price-card--featured glass" data-reveal style="--i:1">
@@ -307,15 +311,17 @@
             <div class="price-card__glow" aria-hidden="true"></div>
             <header class="price-card__head">
               <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-film"/></svg></span>
-              <h3>Long-Form Video</h3>
-              <p class="price-card__sub">1–5 minutes</p>
+              <h3>Video Editing</h3>
+              <p class="price-card__sub">1–5 minute video</p>
             </header>
-            <div class="price-card__price"><span class="cur">$</span>649<span class="dec">.99</span></div>
+            <div class="price-card__price"><span class="cur">$</span>499<span class="dec">.99</span></div>
             <ul class="price-card__list">
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $5 per minute over 5 minutes</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Fixed flat-rate price</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 3–5 day delivery</li>            </ul>
-            <a class="btn btn--primary price-card__cta" href="#contact" data-service="Long-Form Video Editing (1–5 min)" data-ripple>Get Started</a>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $10.00 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 3–5 day delivery</li>
+            </ul>
+            <a class="btn btn--primary price-card__cta" href="#contact" data-service="Video Editing — 1–5 Minute ($499.99)" data-ripple>Get Started</a>
           </article>
 
           <article class="price-card glass" data-reveal style="--i:2">
@@ -323,17 +329,41 @@
             <header class="price-card__head">
               <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-pen"/></svg></span>
               <h3>Graphic Design</h3>
-              <p class="price-card__sub">Posters · branding · thumbnails</p>
+              <p class="price-card__sub">Flat rate · posters, branding, thumbnails</p>
             </header>
             <div class="price-card__price"><span class="cur">$</span>124<span class="dec">.99</span></div>
             <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Fixed flat-rate price</li>
               <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $3 per additional revision</li>
-              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 2–4 day delivery</li>            </ul>
-            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Graphic Design" data-ripple>Get Started</a>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $10.00 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 2–4 day delivery</li>
+            </ul>
+            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Graphic Design ($124.99)" data-ripple>Get Started</a>
           </article>
         </div>
-        <p class="services__note" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg> All prices in USD. Custom scope? Mention it in the contact form for a tailored quote.</p>
+
+        <h3 class="pricing-cat" data-reveal>For Businesses &amp; Companies</h3>
+        <div class="pricing pricing--single">
+          <article class="price-card glass" data-reveal style="--i:0">
+            <div class="price-card__glow" aria-hidden="true"></div>
+            <header class="price-card__head">
+              <span class="price-card__icon"><svg class="ico" aria-hidden="true"><use href="#i-layers"/></svg></span>
+              <h3>Video Editing &amp; Graphic Design</h3>
+              <p class="price-card__sub">Commercial &amp; business projects</p>
+            </header>
+            <div class="price-card__price"><span class="cur">$</span>40<span class="dec">.00</span><span class="per">/hour</span></div>
+            <p class="price-card__why">Business projects are billed hourly because scope, collaboration and revisions can vary throughout production — you pay for the total time spent on your project.</p>
+            <ul class="price-card__list">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $40.00/hour, billed on total project time</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> 4 revisions included</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> $20.00 per additional revision</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg> Timeline scoped per project</li>
+            </ul>
+            <a class="btn btn--ghost price-card__cta" href="#contact" data-service="Business / Company Project ($40.00/hour)" data-ripple>Request a Quote</a>
+          </article>
+        </div>
+
+        <p class="services__note" data-reveal><svg class="ico" aria-hidden="true"><use href="#i-shield"/></svg> All prices in USD. Individuals pay the flat rates listed above; businesses &amp; companies are billed at $40.00/hour based on the total time spent on the project.</p>
       </div>
     </section>
 
@@ -488,9 +518,10 @@
             <label for="c-service">Service requested <span class="req" aria-hidden="true">*</span></label>
             <select id="c-service" name="service" required>
               <option value="" disabled selected>Choose a service…</option>
-              <option>Short-Form Video Editing (0–1 min)</option>
-              <option>Long-Form Video Editing (1–5 min)</option>
-              <option>Graphic Design</option>
+              <option>Video Editing — 0–1 Minute ($149.99)</option>
+              <option>Video Editing — 1–5 Minute ($499.99)</option>
+              <option>Graphic Design ($124.99)</option>
+              <option>Business / Company Project ($40.00/hour)</option>
               <option>Other / Custom</option>
             </select>
             <small class="field__error" data-error-for="c-service"></small>
